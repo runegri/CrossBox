@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Cirrious.MvvmCross.IoC;
 using Cirrious.MvvmCross.ViewModels;
 using CrossBox.Core.DropBox;
 
 namespace CrossBox.Core.ViewModels
 {
-    public class MainMenuViewModel : MvxViewModel
+    public class MainMenuViewModel : CrossBoxViewModel
     {
 
-        private readonly string AppKey = "";
-        private readonly string AppSecret = "";
+        private const string AppKey = "";
+        private const string AppSecret = "";
 
 
 
@@ -28,9 +27,14 @@ namespace CrossBox.Core.ViewModels
                     {
                         _folderContents.Clear();
                         _folderContents.AddRange(contents.Select(item => new DropBoxObjectViewModel(item)));
-                        onDone();
+                        if (onDone != null)
+                        {
+                            onDone();
+                        }
                     },
-                exception => { });
+                ReportError);
+            
+            
         }
 
         private readonly List<DropBoxObjectViewModel> _folderContents;
@@ -43,7 +47,7 @@ namespace CrossBox.Core.ViewModels
             {
                 if (_client == null)
                 {
-                    _client = MvxOpenNetCfContainer.Current.Resolve<IDropBoxClient>();
+                    _client = Container.Resolve<IDropBoxClient>();
                 }
                 return _client;
             }

@@ -49,6 +49,8 @@
     <Compile Include="DropBox\DropBoxItem.cs" />
     <Compile Include="DropBox\DropBoxItemType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\IErrorReporter.cs" />
+    <Compile Include="ViewModels\CrossBoxViewModel.cs" />
     <Compile Include="ViewModels\DropboxObjectViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
   </ItemGroup>

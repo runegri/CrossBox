@@ -27,7 +27,29 @@ namespace CrossBox.Core.Tests.Mocks
 
         public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
-            throw new NotImplementedException();
+        }
+    }
+
+    public class DropBoxClientMock_FailsOnGetFolderContent : IDropBoxClient
+    {
+        private readonly string _errorMessage;
+
+        public DropBoxClientMock_FailsOnGetFolderContent(string errorMessage)
+        {
+            _errorMessage = errorMessage;
+        }
+
+        public void EnsureIsAuthenticated(Action onSuccess, Action<Exception> onError)
+        {
+        }
+
+        public void GetFolderContent(string folder, Action<IEnumerable<DropBoxItem>> onSuccess, Action<Exception> onError)
+        {
+            onError(new Exception(_errorMessage));
+        }
+
+        public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
         }
     }
 }
