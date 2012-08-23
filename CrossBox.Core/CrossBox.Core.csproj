@@ -43,12 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\DropBoxFile.cs" />
-    <Compile Include="Models\DropBoxFolder.cs" />
-    <Compile Include="Models\DropBoxItem.cs" />
-    <Compile Include="Models\DropBoxItemType.cs" />
+    <Compile Include="DropBox\IDropBoxClient.cs" />
+    <Compile Include="DropBox\DropBoxFile.cs" />
+    <Compile Include="DropBox\DropBoxFolder.cs" />
+    <Compile Include="DropBox\DropBoxItem.cs" />
+    <Compile Include="DropBox\DropBoxItemType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\DropboxObjectViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

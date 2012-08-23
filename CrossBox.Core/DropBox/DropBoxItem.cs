@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace CrossBox.Core.Models
+﻿namespace CrossBox.Core.DropBox
 {
     public abstract class DropBoxItem
     {

@@ -1,4 +1,4 @@
-﻿namespace CrossBox.Core.Models
+﻿namespace CrossBox.Core.DropBox
 {
     public enum DropBoxItemType
     {
