@@ -25,16 +25,11 @@ namespace CrossBox.Core.ViewModels
 
         }
 
-        //private void EnsureIsAuthenticated()
-        //{
-        //    ThreadPool.QueueUserWorkItem(o => 
-        //        Client.EnsureIsAuthenticated(() => InvokeOnMainThread(() => SelectFolder("")), ReportError));
-        //}
-
         public void SelectFolder(string folder, Action onDone = null)
         {
-            Client.EnsureIsAuthenticated(() => 
-                Client.GetFolderContent(folder,contents =>
+            AuthenticateAndRun(() => 
+                Client.GetFolderContent(folder,
+                contents =>
                 {
                     _folderContents.Clear();
                     _folderContents.AddRange(
@@ -44,8 +39,12 @@ namespace CrossBox.Core.ViewModels
                         onDone();
                     }
                 },
-                ReportError),
-                ReportError);
+                ReportError));
+        }
+
+        private void AuthenticateAndRun(Action onSuccess)
+        {
+            Client.EnsureIsAuthenticated(onSuccess, ReportError);
         }
 
         private readonly List<DropBoxObjectViewModel> _folderContents;
