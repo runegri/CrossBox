@@ -32,6 +32,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cirrious.MvvmCross.Console, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.4.5.8\lib\net40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.1\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -49,6 +52,7 @@
     <Compile Include="DropBox\DropBoxItem_Tests.cs" />
     <Compile Include="Mocks\DropBoxClientMock.cs" />
     <Compile Include="Mocks\ErrorReporterMock.cs" />
+    <Compile Include="Mocks\MockSetup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DropboxObjectViewModel_Tests.cs" />
     <Compile Include="ViewModels\MainMenuViewModel_Tests.cs" />

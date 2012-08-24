@@ -19,17 +19,26 @@ namespace CrossBox.Core.Tests.ViewModels
                                                   new DropBoxFile("file path", "file name")
                                               };
 
-        public void SetUp_ReturnFolderContent()
-        {
-            MvxOpenNetCfContainer.Current
-                .RegisterServiceInstance<IDropBoxClient>(new DropBoxClientMock_ReturnsFolderContent(_contents));
+        private MockSetup _setup;
+        private IDropBoxClient _client;
 
+        [SetUp]
+        public void SetUp()
+        {
+            _client = new DropBoxClientMock_ReturnsFolderContent(_contents);
+            _setup = new MockSetup(_client);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            _setup.Dispose();
         }
 
         [Test]
         public void Assure_Content_List_Has_Expected_Number_Of_Items()
         {
-            SetUp_ReturnFolderContent();
+            _setup.Initialize();
             var viewModel = new MainMenuViewModel();
             viewModel.SelectFolder("/", () => 
                 Assert.That(viewModel.FolderContents, Has.Count.EqualTo(_contents.Length)));            
@@ -38,7 +47,7 @@ namespace CrossBox.Core.Tests.ViewModels
         [Test]
         public void Assure_Content_List_Has_Expected_Number_Of_Files()
         {
-            SetUp_ReturnFolderContent();
+            _setup.Initialize();
             var viewModel = new MainMenuViewModel();
             viewModel.SelectFolder("/", () => 
                 Assert.That(viewModel.FolderContents.Where(c => !c.IsDirectory).SingleOrDefault(), Is.Not.Null));
@@ -47,8 +56,7 @@ namespace CrossBox.Core.Tests.ViewModels
         [Test]
         public void Assure_Content_List_Has_Directory_With_Expected_Properties()
         {
-            SetUp_ReturnFolderContent();
-
+            _setup.Initialize();
             var expectedFolder = _contents.OfType<DropBoxFolder>().First();
 
             var viewModel = new MainMenuViewModel();
@@ -64,13 +72,11 @@ namespace CrossBox.Core.Tests.ViewModels
         [Test]
         public void Assure_DropBox_Errors_Are_Reported()
         {
+            _client = new DropBoxClientMock_FailsOnGetFolderContent("Error");
+
             Exception reportedException = null;
-
-            var errorReporter = new ErrorReporterMock(exception => reportedException = exception);
-            MvxOpenNetCfContainer.Current.RegisterServiceInstance<IErrorReporter>(errorReporter);
-
-            MvxOpenNetCfContainer.Current
-                .RegisterServiceInstance<IDropBoxClient>(new DropBoxClientMock_FailsOnGetFolderContent("Error"));
+            _setup = new MockSetup(_client, exception => reportedException = exception);
+            _setup.Initialize();
 
             var viewModel = new MainMenuViewModel();
             viewModel.SelectFolder("", () => 
