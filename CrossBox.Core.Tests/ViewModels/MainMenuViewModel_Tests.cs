@@ -22,23 +22,27 @@ namespace CrossBox.Core.Tests.ViewModels
         private MockSetup _setup;
         private IDropBoxClient _client;
 
-        [SetUp]
-        public void SetUp()
+
+        public void SetUp_To_Return_FolderContent()
         {
             _client = new DropBoxClientMock_ReturnsFolderContent(_contents);
             _setup = new MockSetup(_client);
+            _setup.Initialize();
         }
 
         [TearDown]
         public void TearDown()
         {
-            _setup.Dispose();
+            if (_setup != null)
+            {
+                _setup.Dispose();
+            }
         }
 
         [Test]
         public void Assure_Content_List_Has_Expected_Number_Of_Items()
         {
-            _setup.Initialize();
+            SetUp_To_Return_FolderContent();
             var viewModel = new MainMenuViewModel();
             viewModel.SelectFolder("/", () => 
                 Assert.That(viewModel.FolderContents, Has.Count.EqualTo(_contents.Length)));            
@@ -47,7 +51,7 @@ namespace CrossBox.Core.Tests.ViewModels
         [Test]
         public void Assure_Content_List_Has_Expected_Number_Of_Files()
         {
-            _setup.Initialize();
+            SetUp_To_Return_FolderContent();
             var viewModel = new MainMenuViewModel();
             viewModel.SelectFolder("/", () => 
                 Assert.That(viewModel.FolderContents.Where(c => !c.IsDirectory).SingleOrDefault(), Is.Not.Null));
@@ -56,7 +60,7 @@ namespace CrossBox.Core.Tests.ViewModels
         [Test]
         public void Assure_Content_List_Has_Directory_With_Expected_Properties()
         {
-            _setup.Initialize();
+            SetUp_To_Return_FolderContent();
             var expectedFolder = _contents.OfType<DropBoxFolder>().First();
 
             var viewModel = new MainMenuViewModel();
@@ -103,6 +107,18 @@ namespace CrossBox.Core.Tests.ViewModels
             _client = new DropBoxClientMock_FailsOnEnsureIsAuthenticated("Error");
             _setup = new MockSetup(_client, onError);
             _setup.Initialize();
+        }
+
+        [Test]
+        public void Assure_Client_Is_Authenticated_When_Loading_A_Folder()
+        {
+            SetUp_To_Return_FolderContent();
+            var client = (DropBoxClientMock_ReturnsFolderContent) _client;
+
+            var viewModel = new MainMenuViewModel();
+            viewModel.SelectFolder("", () => 
+                Assert.That(client.EnsureIsAuthenticatedWasRun, Is.True));
+
         }
     }
 }

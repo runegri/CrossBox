@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using CrossBox.Core.DropBox;
 
 namespace CrossBox.Core.Tests.Mocks
@@ -10,6 +8,10 @@ namespace CrossBox.Core.Tests.Mocks
     {
         private readonly IEnumerable<DropBoxItem> _folderContent;
 
+        public bool EnsureIsAuthenticatedWasRun;
+        public bool GetFolderContentWasRun;
+        public bool GetFileContentWasRun;
+
         public DropBoxClientMock_ReturnsFolderContent(IEnumerable<DropBoxItem> folderContent)
         {
             _folderContent = folderContent;
@@ -17,16 +19,19 @@ namespace CrossBox.Core.Tests.Mocks
 
         public void EnsureIsAuthenticated(Action onSuccess, Action<Exception> onError)
         {
+            EnsureIsAuthenticatedWasRun = true;
             onSuccess();
         }
 
         public void GetFolderContent(string folder, Action<IEnumerable<DropBoxItem>> onSuccess, Action<Exception> onError)
         {
+            GetFolderContentWasRun = true;
             onSuccess(_folderContent);
         }
 
         public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
+            GetFileContentWasRun = true;
         }
     }
 
