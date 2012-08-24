@@ -72,17 +72,37 @@ namespace CrossBox.Core.Tests.ViewModels
         [Test]
         public void Assure_DropBox_Errors_Are_Reported()
         {
-            _client = new DropBoxClientMock_FailsOnGetFolderContent("Error");
-
             Exception reportedException = null;
-            _setup = new MockSetup(_client, exception => reportedException = exception);
+            Setup_With_GetFolderContent_Error(exception => reportedException = exception);
+            
+            var viewModel = new MainMenuViewModel();
+            viewModel.SelectFolder("", () => 
+                Assert.That(reportedException, Is.Not.Null));
+        }
+
+        private void Setup_With_GetFolderContent_Error(Action<Exception> onError)
+        {
+            _client = new DropBoxClientMock_FailsOnGetFolderContent("Error");
+            _setup = new MockSetup(_client, onError);
             _setup.Initialize();
+        }
+
+        [Test]
+        public void Assure_Failed_DropBox_Authentication_Is_Reported_As_Error()
+        {
+            Exception reportedException = null;
+            Setup_With_EnsureIsAuthenticated_Error(exception => reportedException = exception);
 
             var viewModel = new MainMenuViewModel();
             viewModel.SelectFolder("", () => 
                 Assert.That(reportedException, Is.Not.Null));
-
         }
 
+        private void Setup_With_EnsureIsAuthenticated_Error(Action<Exception> onError)
+        {
+            _client = new DropBoxClientMock_FailsOnEnsureIsAuthenticated("Error");
+            _setup = new MockSetup(_client, onError);
+            _setup.Initialize();
+        }
     }
 }

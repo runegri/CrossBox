@@ -52,4 +52,27 @@ namespace CrossBox.Core.Tests.Mocks
         {
         }
     }
+
+    public class DropBoxClientMock_FailsOnEnsureIsAuthenticated : IDropBoxClient
+    {
+        private readonly string _errorMessage;
+
+        public DropBoxClientMock_FailsOnEnsureIsAuthenticated(string errorMessage)
+        {
+            _errorMessage = errorMessage;
+        }
+
+        public void EnsureIsAuthenticated(Action onSuccess, Action<Exception> onError)
+        {
+            onError(new Exception(_errorMessage));
+        }
+
+        public void GetFolderContent(string folder, Action<IEnumerable<DropBoxItem>> onSuccess, Action<Exception> onError)
+        {
+        }
+
+        public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
+        }
+    }
 }
