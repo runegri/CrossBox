@@ -4,6 +4,7 @@ using CrossBox.Core.DropBox;
 using CrossBox.Core.Tests.Mocks;
 using CrossBox.Core.ViewModels;
 using NUnit.Framework;
+using Cirrious.MvvmCross.ExtensionMethods;
 
 namespace CrossBox.Core.Tests.ViewModels
 {
@@ -132,6 +133,7 @@ namespace CrossBox.Core.Tests.ViewModels
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         [Test]
         public void Assure_Client_Is_Authenticated_When_Loading_A_Folder()
         {
@@ -145,5 +147,39 @@ namespace CrossBox.Core.Tests.ViewModels
         }
 =======
 >>>>>>> Refactored dropbox client mock for easier testing
+=======
+        [Test]
+        public void Assure_Folder_Selection_Causes_FolderContents_To_Be_Updated()
+        {
+            _setup.Initialize();
+
+            var viewModel = new MainMenuViewModel();
+            viewModel.SelectFolder("/", () => 
+                viewModel.SelectFolder("folder", () =>
+                {
+                    Assert.That(viewModel.FolderContents, Has.Count.EqualTo(_childFolderContents.Length));
+
+                    _childFolderContents.ToList()
+                        .ForEach(content =>
+                                Assert.That(viewModel.FolderContents.Single(fc => fc.FullPath.Equals(content.FullPath)), Is.Not.Null));
+                }));
+        }
+
+        [Test]
+        public void Assure_Folder_Selection_Causes_PropertyChanged_Notification()
+        {
+            _setup.Initialize();
+
+            var propertyChanged = "";
+
+            var viewModel = new MainMenuViewModel();
+            viewModel.PropertyChanged += (s, e) => { propertyChanged += e.PropertyName + ","; };
+
+            viewModel.SelectFolder("folder", () => 
+                Assert.That(propertyChanged, Contains.Substring("FolderContents")));
+
+        }
+
+>>>>>>> Added update notification when changing folders
     }
 }

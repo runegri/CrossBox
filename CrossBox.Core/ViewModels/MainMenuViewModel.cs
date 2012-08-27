@@ -32,8 +32,14 @@ namespace CrossBox.Core.ViewModels
                 contents =>
                 {
                     _folderContents.Clear();
+<<<<<<< HEAD
                     _folderContents.AddRange(
                         contents.Select(item => new DropBoxObjectViewModel(item)));
+=======
+                    _folderContents.AddRange(contents.Select(item => new DropBoxObjectViewModel(item)));
+                    FirePropertyChanged(() => FolderContents);
+
+>>>>>>> Added update notification when changing folders
                     if (onDone != null)
                     {
                         onDone();
