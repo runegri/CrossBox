@@ -78,13 +78,8 @@ namespace CrossBox.Core.Tests.ViewModels
         [Test]
         public void Assure_Content_List_Has_Directory_With_Expected_Properties()
         {
-<<<<<<< HEAD
             SetUp_To_Return_FolderContent();
-            var expectedFolder = _contents.OfType<DropBoxFolder>().First();
-=======
-            _setup.Initialize();
             var expectedFolder = _rootFolderContents.OfType<DropBoxFolder>().First();
->>>>>>> Refactored dropbox client mock for easier testing
 
             var viewModel = new MainMenuViewModel();
             viewModel.SelectFolder("/", () =>
@@ -132,8 +127,6 @@ namespace CrossBox.Core.Tests.ViewModels
             _setup.Initialize();
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         [Test]
         public void Assure_Client_Is_Authenticated_When_Loading_A_Folder()
         {
@@ -145,16 +138,14 @@ namespace CrossBox.Core.Tests.ViewModels
                 Assert.That(client.EnsureIsAuthenticatedWasRun, Is.True));
 
         }
-=======
->>>>>>> Refactored dropbox client mock for easier testing
-=======
+
         [Test]
         public void Assure_Folder_Selection_Causes_FolderContents_To_Be_Updated()
         {
-            _setup.Initialize();
+            SetUp_To_Return_FolderContent();
 
             var viewModel = new MainMenuViewModel();
-            viewModel.SelectFolder("/", () => 
+            viewModel.SelectFolder("/", () =>
                 viewModel.SelectFolder("folder", () =>
                 {
                     Assert.That(viewModel.FolderContents, Has.Count.EqualTo(_childFolderContents.Length));
@@ -168,18 +159,55 @@ namespace CrossBox.Core.Tests.ViewModels
         [Test]
         public void Assure_Folder_Selection_Causes_PropertyChanged_Notification()
         {
-            _setup.Initialize();
+            SetUp_To_Return_FolderContent();
 
             var propertyChanged = "";
 
             var viewModel = new MainMenuViewModel();
             viewModel.PropertyChanged += (s, e) => { propertyChanged += e.PropertyName + ","; };
 
-            viewModel.SelectFolder("folder", () => 
+            viewModel.SelectFolder("folder", () =>
                 Assert.That(propertyChanged, Contains.Substring("FolderContents")));
-
         }
 
->>>>>>> Added update notification when changing folders
+        [Test]
+        public void Assure_SelectItemCommand_Navigates_To_Selected_Folder()
+        {
+            SetUp_To_Return_FolderContent();
+
+            var viewModel = new MainMenuViewModel();
+            viewModel.SelectFolder("",
+                () =>
+                {
+                    var folder = viewModel.FolderContents.First(fc => fc.IsDirectory);
+                    viewModel.SelectItemCommand.Execute(folder);
+                    Assert.That(viewModel.FolderName, Is.EqualTo(folder.FullPath));
+                });
+        }
+
+        [Test]
+        public void Assure_Folder_Selection_Updates_FolderName_Property()
+        {
+            SetUp_To_Return_FolderContent();
+
+            var viewModel = new MainMenuViewModel();
+            viewModel.SelectFolder("folder", () =>
+                Assert.That(viewModel.FolderName, Is.EqualTo("folder")));
+        }
+
+        [Test]
+        public void Assure_Folder_Selection_Causes_FolderName_PropertyChanged_Notification()
+        {
+            SetUp_To_Return_FolderContent();
+
+            var propertyChanged = "";
+
+            var viewModel = new MainMenuViewModel();
+            viewModel.PropertyChanged += (s, e) => { propertyChanged += e.PropertyName + ","; };
+
+            viewModel.SelectFolder("folder", () =>
+                Assert.That(propertyChanged, Contains.Substring("FolderName")));
+        }
+
     }
 }

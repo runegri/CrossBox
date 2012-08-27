@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Cirrious.MvvmCross.Commands;
 using Cirrious.MvvmCross.ExtensionMethods;
+using Cirrious.MvvmCross.Interfaces.Commands;
 using Cirrious.MvvmCross.Interfaces.ServiceProvider;
 using Cirrious.MvvmCross.IoC;
 using Cirrious.MvvmCross.ViewModels;
@@ -17,8 +19,6 @@ namespace CrossBox.Core.ViewModels
         private const string AppKey = "";
         private const string AppSecret = "";
 
-
-
         public MainMenuViewModel()
         {
             _folderContents = new List<DropBoxObjectViewModel>();
@@ -32,14 +32,11 @@ namespace CrossBox.Core.ViewModels
                 contents =>
                 {
                     _folderContents.Clear();
-<<<<<<< HEAD
-                    _folderContents.AddRange(
-                        contents.Select(item => new DropBoxObjectViewModel(item)));
-=======
                     _folderContents.AddRange(contents.Select(item => new DropBoxObjectViewModel(item)));
                     FirePropertyChanged(() => FolderContents);
 
->>>>>>> Added update notification when changing folders
+                    FolderName = folder;
+
                     if (onDone != null)
                     {
                         onDone();
@@ -61,6 +58,28 @@ namespace CrossBox.Core.ViewModels
             get { return this.GetService<IDropBoxClient>(); }
         }
 
+        public IMvxCommand SelectItemCommand
+        {
+            get { return new MvxRelayCommand<DropBoxObjectViewModel>(ItemSelected); }
+        }
 
+        private string _folderName;
+        public string FolderName
+        {
+            get { return _folderName; }
+            set
+            {
+                _folderName = value;
+                FirePropertyChanged(() => FolderName);
+            }
+        }
+
+        private void ItemSelected(DropBoxObjectViewModel selectedObject)
+        {
+            if (selectedObject.IsDirectory)
+            {
+                SelectFolder(selectedObject.FullPath);
+            }
+        }
     }
 }

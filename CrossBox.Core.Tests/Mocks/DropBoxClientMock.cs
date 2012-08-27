@@ -6,19 +6,14 @@ namespace CrossBox.Core.Tests.Mocks
 {
     public class DropBoxClientMock_ReturnsFolderContent : IDropBoxClient
     {
-<<<<<<< HEAD
-        private readonly IEnumerable<DropBoxItem> _folderContent;
 
         public bool EnsureIsAuthenticatedWasRun;
         public bool GetFolderContentWasRun;
         public bool GetFileContentWasRun;
 
-        public DropBoxClientMock_ReturnsFolderContent(IEnumerable<DropBoxItem> folderContent)
-=======
         private readonly Func<string, IEnumerable<DropBoxItem>> _selectFolderItems;
         
         public DropBoxClientMock_ReturnsFolderContent(Func<string, IEnumerable<DropBoxItem>> selectFolderItems)
->>>>>>> Refactored dropbox client mock for easier testing
         {
             _selectFolderItems = selectFolderItems;
         }
@@ -31,10 +26,6 @@ namespace CrossBox.Core.Tests.Mocks
 
         public void GetFolderContent(string folder, Action<IEnumerable<DropBoxItem>> onSuccess, Action<Exception> onError)
         {
-<<<<<<< HEAD
-            GetFolderContentWasRun = true;
-            onSuccess(_folderContent);
-=======
             if (_selectFolderItems != null)
             {
                 var result = _selectFolderItems(folder);
@@ -44,7 +35,6 @@ namespace CrossBox.Core.Tests.Mocks
             {
                 onSuccess(new DropBoxItem[0]);
             }
->>>>>>> Refactored dropbox client mock for easier testing
         }
 
         public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
