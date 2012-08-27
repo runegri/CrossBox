@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
-using Cirrious.MvvmCross.IoC;
 using CrossBox.Core.DropBox;
-using CrossBox.Core.Services;
 using CrossBox.Core.Tests.Mocks;
 using CrossBox.Core.ViewModels;
 using NUnit.Framework;
@@ -13,11 +11,18 @@ namespace CrossBox.Core.Tests.ViewModels
     public class MainMenuViewModel_Tests
     {
 
-        private readonly DropBoxItem[] _contents = new DropBoxItem[]
+        private readonly DropBoxItem[] _rootFolderContents = new DropBoxItem[]
                                               {
-                                                  new DropBoxFolder("folder path", "folder name"),
-                                                  new DropBoxFile("file path", "file name")
+                                                  new DropBoxFolder("folder", "folder"),
+                                                  new DropBoxFile("file path", "file name.txt")
                                               };
+
+        private readonly DropBoxItem[] _childFolderContents = new DropBoxItem[]
+                                                                  {
+                                                                      new DropBoxFile("folder/file1.txt", "file1.txt"),
+                                                                      new DropBoxFile("folder/file2.txt", "file2.txt"),
+                                                                      new DropBoxFile("folder/file3.txt", "file3.txt")
+                                                                  };
 
         private MockSetup _setup;
         private IDropBoxClient _client;
@@ -25,7 +30,19 @@ namespace CrossBox.Core.Tests.ViewModels
 
         public void SetUp_To_Return_FolderContent()
         {
-            _client = new DropBoxClientMock_ReturnsFolderContent(_contents);
+            _client = new DropBoxClientMock_ReturnsFolderContent(
+                folder =>
+                {
+                    if (folder == "" || folder == "/")
+                    {
+                        return _rootFolderContents;
+                    }
+                    if (string.Equals(folder, "folder", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return _childFolderContents;
+                    }
+                    return new DropBoxItem[0];
+                });
             _setup = new MockSetup(_client);
             _setup.Initialize();
         }
@@ -44,8 +61,8 @@ namespace CrossBox.Core.Tests.ViewModels
         {
             SetUp_To_Return_FolderContent();
             var viewModel = new MainMenuViewModel();
-            viewModel.SelectFolder("/", () => 
-                Assert.That(viewModel.FolderContents, Has.Count.EqualTo(_contents.Length)));            
+            viewModel.SelectFolder("/", () =>
+                Assert.That(viewModel.FolderContents, Has.Count.EqualTo(_rootFolderContents.Length)));
         }
 
         [Test]
@@ -53,15 +70,20 @@ namespace CrossBox.Core.Tests.ViewModels
         {
             SetUp_To_Return_FolderContent();
             var viewModel = new MainMenuViewModel();
-            viewModel.SelectFolder("/", () => 
+            viewModel.SelectFolder("/", () =>
                 Assert.That(viewModel.FolderContents.Where(c => !c.IsDirectory).SingleOrDefault(), Is.Not.Null));
         }
 
         [Test]
         public void Assure_Content_List_Has_Directory_With_Expected_Properties()
         {
+<<<<<<< HEAD
             SetUp_To_Return_FolderContent();
             var expectedFolder = _contents.OfType<DropBoxFolder>().First();
+=======
+            _setup.Initialize();
+            var expectedFolder = _rootFolderContents.OfType<DropBoxFolder>().First();
+>>>>>>> Refactored dropbox client mock for easier testing
 
             var viewModel = new MainMenuViewModel();
             viewModel.SelectFolder("/", () =>
@@ -78,9 +100,9 @@ namespace CrossBox.Core.Tests.ViewModels
         {
             Exception reportedException = null;
             Setup_With_GetFolderContent_Error(exception => reportedException = exception);
-            
+
             var viewModel = new MainMenuViewModel();
-            viewModel.SelectFolder("", () => 
+            viewModel.SelectFolder("", () =>
                 Assert.That(reportedException, Is.Not.Null));
         }
 
@@ -98,7 +120,7 @@ namespace CrossBox.Core.Tests.ViewModels
             Setup_With_EnsureIsAuthenticated_Error(exception => reportedException = exception);
 
             var viewModel = new MainMenuViewModel();
-            viewModel.SelectFolder("", () => 
+            viewModel.SelectFolder("", () =>
                 Assert.That(reportedException, Is.Not.Null));
         }
 
@@ -109,6 +131,7 @@ namespace CrossBox.Core.Tests.ViewModels
             _setup.Initialize();
         }
 
+<<<<<<< HEAD
         [Test]
         public void Assure_Client_Is_Authenticated_When_Loading_A_Folder()
         {
@@ -120,5 +143,7 @@ namespace CrossBox.Core.Tests.ViewModels
                 Assert.That(client.EnsureIsAuthenticatedWasRun, Is.True));
 
         }
+=======
+>>>>>>> Refactored dropbox client mock for easier testing
     }
 }
