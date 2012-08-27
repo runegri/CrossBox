@@ -53,6 +53,7 @@
     <Compile Include="StartNavigation.cs" />
     <Compile Include="ViewModels\CrossBoxViewModel.cs" />
     <Compile Include="ViewModels\DropboxObjectViewModel.cs" />
+    <Compile Include="ViewModels\FileContentViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

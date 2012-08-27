@@ -27,7 +27,7 @@ namespace CrossBox.Core.ViewModels
 
         public void SelectFolder(string folder, Action onDone = null)
         {
-            AuthenticateAndRun(() => 
+            AuthenticateAndRun(() =>
                 Client.GetFolderContent(folder,
                 contents =>
                 {
@@ -79,6 +79,13 @@ namespace CrossBox.Core.ViewModels
             if (selectedObject.IsDirectory)
             {
                 SelectFolder(selectedObject.FullPath);
+            }
+            else
+            {
+                Client.GetFileContent(
+                    selectedObject.FullPath,
+                    file => RequestNavigate<FileContentViewModel>(new { dropBoxFile = file }),
+                    ReportError);
             }
         }
     }

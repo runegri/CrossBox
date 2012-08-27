@@ -15,7 +15,7 @@ namespace CrossBox.Core.Tests.ViewModels
         private readonly DropBoxItem[] _rootFolderContents = new DropBoxItem[]
                                               {
                                                   new DropBoxFolder("folder", "folder"),
-                                                  new DropBoxFile("file path", "file name.txt")
+                                                  new DropBoxFile("file.txt", "file.txt")
                                               };
 
         private readonly DropBoxItem[] _childFolderContents = new DropBoxItem[]
@@ -207,6 +207,24 @@ namespace CrossBox.Core.Tests.ViewModels
 
             viewModel.SelectFolder("folder", () =>
                 Assert.That(propertyChanged, Contains.Substring("FolderName")));
+        }
+        
+        [Test]
+        public void Assure_File_Selection_Causes_Navigate_To_FileContentViewModel()
+        {
+            SetUp_To_Return_FolderContent();
+
+            var viewModel = new MainMenuViewModel();
+            viewModel.SelectFolder("", () =>
+                                           {
+                                               var file = viewModel.FolderContents.First(fc => !fc.IsDirectory);
+                                               viewModel.SelectItemCommand.Execute(file);
+                                               var requests = _setup.Dispatcher.Requests;
+
+                                               Assert.That(requests, Has.Count.EqualTo(1));
+                                           });
+
+
         }
 
     }

@@ -6,6 +6,7 @@ using Cirrious.MvvmCross.Application;
 using Cirrious.MvvmCross.Console.Platform;
 using Cirrious.MvvmCross.ExtensionMethods;
 using Cirrious.MvvmCross.Interfaces.ServiceProvider;
+using Cirrious.MvvmCross.Interfaces.Views;
 using CrossBox.Core.DropBox;
 using CrossBox.Core.Services;
 
@@ -15,6 +16,7 @@ namespace CrossBox.Core.Tests.Mocks
     {
         private readonly IDropBoxClient _dropBoxClient;
         private readonly Action<Exception> _reportErrorAction;
+        private readonly ViewDispatcherMock _dispatcher = new ViewDispatcherMock();
 
         public MockSetup(IDropBoxClient dropBoxClient, Action<Exception> reportErrorAction = null)
         {
@@ -26,6 +28,13 @@ namespace CrossBox.Core.Tests.Mocks
         {
             return new MockApplication(new ErrorReporterMock(_reportErrorAction), _dropBoxClient);
         }
+
+        protected override IMvxViewDispatcherProvider CreateViewDispatcherProvider()
+        {
+            return _dispatcher;
+        }
+
+        public ViewDispatcherMock Dispatcher { get { return _dispatcher; }}
     }
 
     public class MockApplication : 

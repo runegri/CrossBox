@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using CrossBox.Core.DropBox;
 
 namespace CrossBox.Core.Tests.Mocks
@@ -40,6 +41,7 @@ namespace CrossBox.Core.Tests.Mocks
         public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
             GetFileContentWasRun = true;
+            onSuccess(new DropBoxFile(path, Path.GetFileName(path)));
         }
     }
 

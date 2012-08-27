@@ -53,8 +53,10 @@
     <Compile Include="Mocks\DropBoxClientMock.cs" />
     <Compile Include="Mocks\ErrorReporterMock.cs" />
     <Compile Include="Mocks\MockSetup.cs" />
+    <Compile Include="Mocks\ViewDispatcherMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\DropboxObjectViewModel_Tests.cs" />
+    <Compile Include="ViewModels\FileContentViewModel_Tests.cs" />
     <Compile Include="ViewModels\MainMenuViewModel_Tests.cs" />
   </ItemGroup>
   <ItemGroup>
