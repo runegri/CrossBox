@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Text;
 using CrossBox.Core.DropBox;
 using CrossBox.Core.ViewModels;
 using NUnit.Framework;
@@ -33,6 +30,15 @@ namespace CrossBox.Core.Tests.ViewModels
         public void Assure_FileContentViewModel_Wraps_Content_Property()
         {
             Assert.That(_viewModel.Content, Is.EqualTo(_file.ContentAsText));
+        }
+
+        [Test]
+        public void Assure_Content_Property_Does_Not_Fail_For_Empty_File()
+        {
+            var file = new DropBoxFile("/path/file.txt", "file.txt");
+            var viewModel = new FileContentViewModel(file);
+
+            Assert.DoesNotThrow(() => { var tmp = viewModel.Content; });
         }
 
     }

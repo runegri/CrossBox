@@ -4,7 +4,6 @@ using CrossBox.Core.DropBox;
 using CrossBox.Core.Tests.Mocks;
 using CrossBox.Core.ViewModels;
 using NUnit.Framework;
-using Cirrious.MvvmCross.ExtensionMethods;
 
 namespace CrossBox.Core.Tests.ViewModels
 {
@@ -13,17 +12,17 @@ namespace CrossBox.Core.Tests.ViewModels
     {
 
         private readonly DropBoxItem[] _rootFolderContents = new DropBoxItem[]
-                                              {
-                                                  new DropBoxFolder("folder", "folder"),
-                                                  new DropBoxFile("file.txt", "file.txt")
-                                              };
+        {
+            new DropBoxFolder("folder", "folder"),
+            new DropBoxFile("file.txt", "file.txt")
+        };
 
         private readonly DropBoxItem[] _childFolderContents = new DropBoxItem[]
-                                                                  {
-                                                                      new DropBoxFile("folder/file1.txt", "file1.txt"),
-                                                                      new DropBoxFile("folder/file2.txt", "file2.txt"),
-                                                                      new DropBoxFile("folder/file3.txt", "file3.txt")
-                                                                  };
+        {
+            new DropBoxFile("folder/file1.txt", "file1.txt"),
+            new DropBoxFile("folder/file2.txt", "file2.txt"),
+            new DropBoxFile("folder/file3.txt", "file3.txt")
+        };
 
         private MockSetup _setup;
         private IDropBoxClient _client;
@@ -131,10 +130,10 @@ namespace CrossBox.Core.Tests.ViewModels
         public void Assure_Client_Is_Authenticated_When_Loading_A_Folder()
         {
             SetUp_To_Return_FolderContent();
-            var client = (DropBoxClientMock_ReturnsFolderContent) _client;
+            var client = (DropBoxClientMock_ReturnsFolderContent)_client;
 
             var viewModel = new MainMenuViewModel();
-            viewModel.SelectFolder("", () => 
+            viewModel.SelectFolder("", () =>
                 Assert.That(client.EnsureIsAuthenticatedWasRun, Is.True));
 
         }
@@ -208,23 +207,22 @@ namespace CrossBox.Core.Tests.ViewModels
             viewModel.SelectFolder("folder", () =>
                 Assert.That(propertyChanged, Contains.Substring("FolderName")));
         }
-        
+
         [Test]
         public void Assure_File_Selection_Causes_Navigate_To_FileContentViewModel()
         {
             SetUp_To_Return_FolderContent();
 
             var viewModel = new MainMenuViewModel();
-            viewModel.SelectFolder("", () =>
-                                           {
-                                               var file = viewModel.FolderContents.First(fc => !fc.IsDirectory);
-                                               viewModel.SelectItemCommand.Execute(file);
-                                               var requests = _setup.Dispatcher.Requests;
-
-                                               Assert.That(requests, Has.Count.EqualTo(1));
-                                           });
-
-
+            viewModel.SelectFolder("",
+                () =>
+                {
+                    var file = viewModel.FolderContents.First(fc => !fc.IsDirectory);
+                    viewModel.SelectItemCommand.Execute(file);
+                    var request = _setup.Dispatcher.Requests.Single();
+                    
+                    Assert.That(request.ViewModelType, Is.EqualTo(typeof(FileContentViewModel)));
+                });
         }
 
     }

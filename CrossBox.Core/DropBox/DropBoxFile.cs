@@ -19,6 +19,6 @@ namespace CrossBox.Core.DropBox
 
         public bool HasContent { get { return _content != null && _content.Length > 0; } }
         public byte[] Content { get { return _content; } }
-        public string ContentAsText { get { return Encoding.UTF8.GetString(_content); } }
+        public string ContentAsText { get { return HasContent ? Encoding.UTF8.GetString(_content) : string.Empty; } }
     }
 }

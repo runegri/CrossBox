@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Cirrious.MvvmCross.Commands;
 using Cirrious.MvvmCross.ExtensionMethods;
 using Cirrious.MvvmCross.Interfaces.Commands;
 using Cirrious.MvvmCross.Interfaces.ServiceProvider;
-using Cirrious.MvvmCross.IoC;
-using Cirrious.MvvmCross.ViewModels;
 using CrossBox.Core.DropBox;
-using System.Threading;
 
 namespace CrossBox.Core.ViewModels
 {
     public class MainMenuViewModel : CrossBoxViewModel, IMvxServiceConsumer<IDropBoxClient>
     {
 
-        private const string AppKey = "";
-        private const string AppSecret = "";
+        private const string AppKey = "6klylndnjaxt7z2";
+        private const string AppSecret = "6cz7plryu0i5l54";
 
         public MainMenuViewModel()
         {
