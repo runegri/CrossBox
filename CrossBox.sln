@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossBox.UI.WP7", "CrossBox
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossBox.Core.WP7", "CrossBox.Core\CrossBox.Core.WP7.csproj", "{925A0EF3-80C3-4452-A3DD-B383078A8824}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cirrious.MvvmCross.WindowsPhone", "..\MvvmCross\Cirrious\Cirrious.MvvmCross\Cirrious.MvvmCross.WindowsPhone.csproj", "{A9F1C41F-FBC3-4DE3-8572-68990C1BCFC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{925A0EF3-80C3-4452-A3DD-B383078A8824}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{925A0EF3-80C3-4452-A3DD-B383078A8824}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{925A0EF3-80C3-4452-A3DD-B383078A8824}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9F1C41F-FBC3-4DE3-8572-68990C1BCFC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9F1C41F-FBC3-4DE3-8572-68990C1BCFC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9F1C41F-FBC3-4DE3-8572-68990C1BCFC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9F1C41F-FBC3-4DE3-8572-68990C1BCFC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,7 +13,7 @@ namespace CrossBox.Core.Tests.Mocks
         public bool GetFileContentWasRun;
 
         private readonly Func<string, IEnumerable<DropBoxItem>> _selectFolderItems;
-        
+
         public DropBoxClientMock_ReturnsFolderContent(Func<string, IEnumerable<DropBoxItem>> selectFolderItems)
         {
             _selectFolderItems = selectFolderItems;
@@ -88,6 +88,42 @@ namespace CrossBox.Core.Tests.Mocks
 
         public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
+        }
+    }
+
+    public class DropBoxClientMock_ReturnsFileContent : IDropBoxClient
+    {
+        public void EnsureIsAuthenticated(Action onSuccess, Action<Exception> onError)
+        {
+            onSuccess();
+        }
+
+        public void GetFolderContent(string folder, Action<IEnumerable<DropBoxItem>> onSuccess, Action<Exception> onError)
+        {
+            onSuccess(new DropBoxItem[] { GetFileWithContent() });
+        }
+
+        private static DropBoxFile GetFileWithContent()
+        {
+            var content = System.Text.Encoding.UTF8.GetBytes("content here");
+            return new DropBoxFile("file.txt", "file.txt", content);
+        }
+
+        private static DropBoxFile GetEmptyFile()
+        {
+            return new DropBoxFile("empty.txt", "empty.txt");
+        }
+
+        public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
+            if (path.Equals("empty.txt"))
+            {
+                onSuccess(GetEmptyFile());
+            }
+            else
+            {
+                onSuccess(GetFileWithContent());
+            }
         }
     }
 }

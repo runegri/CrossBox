@@ -15,15 +15,14 @@ using Microsoft.Phone.Controls;
 
 namespace CrossBox.UI.WP7.Views
 {
-    public partial class MainMenuView : BaseMainMenuView
+    public partial class FileContentView : BaseFileContentView
     {
-        public MainMenuView()
+        public FileContentView()
         {
             InitializeComponent();
         }
-
     }
 
-    public class BaseMainMenuView : MvxPhonePage<MainMenuViewModel>
-    { }
+    public class BaseFileContentView : MvxPhonePage<FileContentViewModel>
+    {}
 }

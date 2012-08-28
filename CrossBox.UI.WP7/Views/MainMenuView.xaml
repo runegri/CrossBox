@@ -5,7 +5,7 @@
     xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
     xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Views="clr-namespace:CrossBox.UI.WP7.Views" FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Views="clr-namespace:CrossBox.UI.WP7.Views" xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" xmlns:Commands="clr-namespace:Cirrious.MvvmCross.WindowsPhone.Commands;assembly=Cirrious.MvvmCross.WindowsPhone" FontFamily="{StaticResource PhoneFontFamilyNormal}"
     FontSize="{StaticResource PhoneFontSizeNormal}"
     Foreground="{StaticResource PhoneForegroundBrush}"
     SupportedOrientations="Portrait" Orientation="Portrait"
@@ -27,17 +27,36 @@
 
         <!--ContentPanel - place additional content here-->
         <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
-            <ListBox ItemsSource="{Binding FolderContents}">
+            <ListBox ItemsSource="{Binding FolderContents}" DataContext="{Binding}" x:Name="FolderContentsList">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="9*" />
                             </Grid.ColumnDefinitions>
+
                             
-                            <TextBlock Grid.Column="0" Text="{Binding IsDirectory}" />
-                            <TextBlock Grid.Column="1" Text="{Binding Name}" />
+                            <Image Grid.Column="0" Source="/CrossBox.UI.WP7;component/Resources/Folder.png" 
+                                   Width="48" Height="48" Margin="4"
+                                   Visibility="{Binding IsDirectory, Converter={StaticResource VisibilityConverter}}" />
+                            <Image Grid.Column="0" Source="/CrossBox.UI.WP7;component/Resources/File.png" 
+                                   Width="48" Height="48" Margin="4"
+                                   Visibility="{Binding IsDirectory, Converter={StaticResource InverseVisibilityConverter}}" />
+
+                            <TextBlock Grid.Column="1" 
+                                       Height="48" Margin="4"
+                                       FontSize="{StaticResource PhoneFontSizeLarge}"
+                                       Text="{Binding Name}" />
+                            
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="Tap">
+                                    <Commands:MvxEventToCommand 
+                                        Command="{Binding Path=DataContext.SelectItemCommand, ElementName=FolderContentsList}"
+                                        CommandParameter="{Binding}" />
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                            
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

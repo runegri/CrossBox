@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Cirrious.MvvmCross.Commands;
 using Cirrious.MvvmCross.ExtensionMethods;
@@ -11,13 +12,9 @@ namespace CrossBox.Core.ViewModels
 {
     public class MainMenuViewModel : CrossBoxViewModel, IMvxServiceConsumer<IDropBoxClient>
     {
-
-        private const string AppKey = "6klylndnjaxt7z2";
-        private const string AppSecret = "6cz7plryu0i5l54";
-
         public MainMenuViewModel()
         {
-            _folderContents = new List<DropBoxObjectViewModel>();
+            _folderContents = new ObservableCollection<DropBoxObjectViewModel>();
             SelectFolder("");
         }
 
@@ -25,11 +22,14 @@ namespace CrossBox.Core.ViewModels
         {
             AuthenticateAndRun(() =>
                 Client.GetFolderContent(folder,
-                contents =>
+                contents => 
                 {
-                    _folderContents.Clear();
-                    _folderContents.AddRange(contents.Select(item => new DropBoxObjectViewModel(item)));
-                    FirePropertyChanged(() => FolderContents);
+                    
+                    FolderContents.Clear();
+                    contents
+                        .Select(item => new DropBoxObjectViewModel(item))
+                        .ToList()
+                        .ForEach(FolderContents.Add);
 
                     FolderName = folder;
 
@@ -46,8 +46,8 @@ namespace CrossBox.Core.ViewModels
             Client.EnsureIsAuthenticated(onSuccess, ReportError);
         }
 
-        private readonly List<DropBoxObjectViewModel> _folderContents;
-        public List<DropBoxObjectViewModel> FolderContents { get { return _folderContents; } }
+        private readonly ObservableCollection<DropBoxObjectViewModel> _folderContents;
+        public ObservableCollection<DropBoxObjectViewModel> FolderContents { get { return _folderContents; } }
 
         private IDropBoxClient Client
         {
@@ -78,10 +78,7 @@ namespace CrossBox.Core.ViewModels
             }
             else
             {
-                Client.GetFileContent(
-                    selectedObject.FullPath,
-                    file => RequestNavigate<FileContentViewModel>(new { dropBoxFile = file }),
-                    ReportError);
+                RequestNavigate<FileContentViewModel>(new {fileName = selectedObject.FullPath});
             }
         }
     }

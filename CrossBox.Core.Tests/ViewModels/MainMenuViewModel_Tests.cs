@@ -154,21 +154,7 @@ namespace CrossBox.Core.Tests.ViewModels
                                 Assert.That(viewModel.FolderContents.Single(fc => fc.FullPath.Equals(content.FullPath)), Is.Not.Null));
                 }));
         }
-
-        [Test]
-        public void Assure_Folder_Selection_Causes_PropertyChanged_Notification()
-        {
-            SetUp_To_Return_FolderContent();
-
-            var propertyChanged = "";
-
-            var viewModel = new MainMenuViewModel();
-            viewModel.PropertyChanged += (s, e) => { propertyChanged += e.PropertyName + ","; };
-
-            viewModel.SelectFolder("folder", () =>
-                Assert.That(propertyChanged, Contains.Substring("FolderContents")));
-        }
-
+        
         [Test]
         public void Assure_SelectItemCommand_Navigates_To_Selected_Folder()
         {
