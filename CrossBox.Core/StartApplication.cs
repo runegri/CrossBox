@@ -4,7 +4,7 @@ using CrossBox.Core.ViewModels;
 
 namespace CrossBox.Core
 {
-    public class StartNavigation
+    public class StartApplication
         : MvxApplicationObject,
         IMvxStartNavigation
     {

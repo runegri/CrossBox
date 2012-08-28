@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CrossBoxApp.cs" />
     <Compile Include="DropBox\IDropBoxClient.cs" />
     <Compile Include="DropBox\DropBoxFile.cs" />
     <Compile Include="DropBox\DropBoxFolder.cs" />
@@ -50,7 +51,7 @@
     <Compile Include="DropBox\DropBoxItemType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IErrorReporter.cs" />
-    <Compile Include="StartNavigation.cs" />
+    <Compile Include="StartApplication.cs" />
     <Compile Include="ViewModels\CrossBoxViewModel.cs" />
     <Compile Include="ViewModels\DropboxObjectViewModel.cs" />
     <Compile Include="ViewModels\FileContentViewModel.cs" />
