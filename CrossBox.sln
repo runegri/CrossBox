@@ -5,6 +5,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossBox.Core", "CrossBox.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossBox.Core.Tests", "CrossBox.Core.Tests\CrossBox.Core.Tests.csproj", "{5C63A26A-B4CE-4CD4-BE2D-876185E8268E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossBox.UI.WP7", "CrossBox.UI.WP7\CrossBox.UI.WP7.csproj", "{8FE7D614-E2A7-4B62-94EA-98D23558220F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossBox.Core.WP7", "CrossBox.Core\CrossBox.Core.WP7.csproj", "{925A0EF3-80C3-4452-A3DD-B383078A8824}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +23,16 @@ Global
 		{5C63A26A-B4CE-4CD4-BE2D-876185E8268E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C63A26A-B4CE-4CD4-BE2D-876185E8268E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C63A26A-B4CE-4CD4-BE2D-876185E8268E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{925A0EF3-80C3-4452-A3DD-B383078A8824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{925A0EF3-80C3-4452-A3DD-B383078A8824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{925A0EF3-80C3-4452-A3DD-B383078A8824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{925A0EF3-80C3-4452-A3DD-B383078A8824}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
