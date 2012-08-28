@@ -18,7 +18,7 @@ namespace CrossBox.Core.ViewModels
         public MainMenuViewModel()
         {
             _folderContents = new List<DropBoxObjectViewModel>();
-
+            SelectFolder("");
         }
 
         public void SelectFolder(string folder, Action onDone = null)

@@ -12,5 +12,7 @@ namespace CrossBox.Core
             var startApplication = new StartApplication();
             this.RegisterServiceInstance<IMvxStartNavigation>(startApplication);
         }
+
+        
     }
 }
