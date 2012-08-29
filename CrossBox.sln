@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cirrious.MvvmCross.WindowsP
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossBox.Core.Android", "CrossBox.Core\CrossBox.Core.Android.csproj", "{CFE5B685-7CB0-46E4-ABE3-99F1E70A470E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CrossBox.Ui.Android", "CrossBox.Ui.Android\CrossBox.Ui.Android.csproj", "{A48324CB-A666-4CBD-9454-03188C79FAA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,7 +31,6 @@ Global
 		{5C63A26A-B4CE-4CD4-BE2D-876185E8268E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8FE7D614-E2A7-4B62-94EA-98D23558220F}.Release|Any CPU.Deploy.0 = Release|Any CPU
@@ -45,6 +46,12 @@ Global
 		{CFE5B685-7CB0-46E4-ABE3-99F1E70A470E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFE5B685-7CB0-46E4-ABE3-99F1E70A470E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFE5B685-7CB0-46E4-ABE3-99F1E70A470E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A48324CB-A666-4CBD-9454-03188C79FAA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A48324CB-A666-4CBD-9454-03188C79FAA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A48324CB-A666-4CBD-9454-03188C79FAA4}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{A48324CB-A666-4CBD-9454-03188C79FAA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A48324CB-A666-4CBD-9454-03188C79FAA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A48324CB-A666-4CBD-9454-03188C79FAA4}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
