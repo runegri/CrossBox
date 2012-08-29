@@ -61,6 +61,9 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <ProgressBar IsIndeterminate="True" 
+                         Visibility="{Binding IsLoading, Converter={StaticResource VisibilityConverter}}" />
+
         </Grid>
     </Grid>
  

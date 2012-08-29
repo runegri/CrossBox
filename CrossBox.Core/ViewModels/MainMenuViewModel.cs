@@ -11,27 +11,28 @@ using CrossBox.Core.DropBox;
 namespace CrossBox.Core.ViewModels
 {
     public class MainMenuViewModel : CrossBoxViewModel, IMvxServiceConsumer<IDropBoxClient>
-    {
-        public MainMenuViewModel()
+    {        
+        public MainMenuViewModel(string folder = "/")
         {
             _folderContents = new ObservableCollection<DropBoxObjectViewModel>();
-            SelectFolder("");
+            SelectFolder(folder ?? "/");
         }
 
         public void SelectFolder(string folder, Action onDone = null)
         {
+            FolderContents.Clear();
+            IsLoading = true;
             AuthenticateAndRun(() =>
                 Client.GetFolderContent(folder,
-                contents => 
+                contents =>
                 {
-                    
-                    FolderContents.Clear();
                     contents
                         .Select(item => new DropBoxObjectViewModel(item))
                         .ToList()
                         .ForEach(FolderContents.Add);
 
                     FolderName = folder;
+                    IsLoading = false;
 
                     if (onDone != null)
                     {
@@ -70,15 +71,27 @@ namespace CrossBox.Core.ViewModels
             }
         }
 
+        private bool _isLoading;
+        public bool IsLoading
+        {
+            get { return _isLoading; }
+            private set
+            {
+                _isLoading = value;
+                FirePropertyChanged(() => IsLoading);
+            }
+        }
+
         private void ItemSelected(DropBoxObjectViewModel selectedObject)
         {
             if (selectedObject.IsDirectory)
             {
-                SelectFolder(selectedObject.FullPath);
+                RequestNavigate<MainMenuViewModel>(new {folder = selectedObject.FullPath});
+                //SelectFolder(selectedObject.FullPath);
             }
             else
             {
-                RequestNavigate<FileContentViewModel>(new {fileName = selectedObject.FullPath});
+                RequestNavigate<FileContentViewModel>(new { fileName = selectedObject.FullPath });
             }
         }
     }

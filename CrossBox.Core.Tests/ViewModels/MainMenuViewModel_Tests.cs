@@ -166,7 +166,9 @@ namespace CrossBox.Core.Tests.ViewModels
                 {
                     var folder = viewModel.FolderContents.First(fc => fc.IsDirectory);
                     viewModel.SelectItemCommand.Execute(folder);
-                    Assert.That(viewModel.FolderName, Is.EqualTo(folder.FullPath));
+
+                    var request = _setup.Dispatcher.Requests.Single();
+                    Assert.That(request.ParameterValues.Single().Value, Is.EqualTo(folder.Name));
                 });
         }
 
@@ -209,6 +211,25 @@ namespace CrossBox.Core.Tests.ViewModels
                     
                     Assert.That(request.ViewModelType, Is.EqualTo(typeof(FileContentViewModel)));
                 });
+        }
+
+        [Test]
+        public void Assure_ViewModel_Created_Using_Default_Constructor_Navigates_To_Root_Folder()
+        {
+            SetUp_To_Return_FolderContent();
+
+            var viewModel = new MainMenuViewModel();
+            Assert.That(viewModel.FolderName, Is.EqualTo("/"));
+        }
+
+        [Test]
+        public void Assure_ViewModel_Created_With_Folder_Argument_Navigates_To_Named_Folder()
+        {
+            SetUp_To_Return_FolderContent();
+
+            const string folderName = "folder";
+            var viewModel = new MainMenuViewModel(folderName);
+            Assert.That(viewModel.FolderName, Is.EqualTo(folderName));
         }
 
     }
