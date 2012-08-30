@@ -10,7 +10,6 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CrossBox.Core</RootNamespace>
     <AssemblyName>CrossBox.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -47,6 +46,15 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="DropNet.MonoTouch">
+      <HintPath>..\lib\iOS\DropNet.MonoTouch.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft_Json_MonoTouch">
+      <HintPath>..\lib\iOS\Newtonsoft_Json_MonoTouch.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp.MonoTouch">
+      <HintPath>..\lib\iOS\RestSharp.MonoTouch.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CrossBoxApp.cs" />

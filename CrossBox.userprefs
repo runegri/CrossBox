@@ -1,0 +1,14 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CrossBox.Core/DropBox/DropBoxClient.cs">
+    <Files>
+      <File FileName="CrossBox.Core/DropBox/AndroidDropBoxClient.cs" Line="3" Column="7" />
+      <File FileName="CrossBox.Core.Tests/Mocks/MockSetup.cs" Line="2" Column="7" />
+      <File FileName="CrossBox.Core/DropBox/DropBoxClient.cs" Line="21" Column="22" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
