@@ -24,7 +24,7 @@ namespace CrossBox.Core.ViewModels
             IsLoading = true;
             AuthenticateAndRun(() =>
                 Client.GetFolderContent(folder,
-                contents =>
+                contents => InvokeOnMainThread(() => 
                 {
                     contents
                         .Select(item => new DropBoxObjectViewModel(item))
@@ -38,7 +38,7 @@ namespace CrossBox.Core.ViewModels
                     {
                         onDone();
                     }
-                },
+                }),
                 ReportError));
         }
 

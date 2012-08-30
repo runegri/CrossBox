@@ -38,6 +38,7 @@
     <Reference Include="DropNet.Android">
       <HintPath>..\lib\android\DropNet.Android.dll</HintPath>
     </Reference>
+    <Reference Include="Mono.Android" />
     <Reference Include="mscorlib" />
     <Reference Include="Newtonsoft.Json.MonoDroid">
       <HintPath>..\lib\android\Newtonsoft.Json.MonoDroid.dll</HintPath>
@@ -52,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CrossBoxApp.cs" />
+    <Compile Include="DropBox\AndroidDropBoxClient.cs" />
     <Compile Include="DropBox\DropBoxClient.cs" />
     <Compile Include="DropBox\DropBoxFile.cs" />
     <Compile Include="DropBox\DropBoxFolder.cs" />

@@ -1,21 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 using Android.App;
 using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Cirrious.MvvmCross.Application;
 using Cirrious.MvvmCross.Binding.Android;
+using Cirrious.MvvmCross.ExtensionMethods;
+using Cirrious.MvvmCross.Interfaces.ServiceProvider;
 using CrossBox.Core;
+using CrossBox.Core.Android.DropBox;
+using CrossBox.Core.DropBox;
 
 namespace CrossBox.Ui.Android
 {
-    public class Setup : MvxBaseAndroidBindingSetup
+    public class Setup : MvxBaseAndroidBindingSetup, IMvxServiceProducer<IDropBoxClient>
     {
         public Setup(Context applicationContext)
             : base(applicationContext)
@@ -24,6 +19,7 @@ namespace CrossBox.Ui.Android
 
         protected override MvxApplication CreateApp()
         {
+            this.RegisterServiceInstance<IDropBoxClient>(AndroidDropBoxClient.CreateInstance(CrossBoxApp.AppKey, CrossBoxApp.AppSecret, ApplicationContext));
             return new CrossBoxApp();
         }
     }
