@@ -2,10 +2,9 @@
 using System.IO.IsolatedStorage;
 using System.Windows;
 using System.Windows.Controls;
-using CrossBox.Core.DropBox;
 using Microsoft.Phone.Controls;
 
-namespace CrossBox.Core.WP7.DropBox
+namespace CrossBox.Core.DropBox
 {
     public class Wp7DropBoxClient : DropboxClient
     {
