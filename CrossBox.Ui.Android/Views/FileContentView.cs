@@ -5,11 +5,11 @@ using CrossBox.Core.ViewModels;
 namespace CrossBox.Ui.Android.Views
 {
     [Activity]
-    public class MainMenuView : MvxBindingActivityView<MainMenuViewModel>
+    public class FileContentView : MvxBindingActivityView<FileContentViewModel>
     {
         protected override void OnViewModelSet()
         {
-            SetContentView(Resource.Layout.Page_MainMenuView);
+            SetContentView(Resource.Layout.Page_FileContentView);
         }
     }
 }

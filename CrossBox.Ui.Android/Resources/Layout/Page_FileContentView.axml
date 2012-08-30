@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+      xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:local="http://schemas.android.com/apk/res/CrossBox.UI.Android"
+      android:orientation="vertical"
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent">
+  <ProgressBar
+      android:layout_width="100dp"
+      android:layout_height="100dp"
+      android:layout_gravity="center"
+      local:MvxBind="{'Visibility':{'Path':'IsLoading','Converter':'Visibility'}}"
+    />
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      local:MvxBind="{'Text':{'Path':'fileName'}}"
+    />
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="fill_parent"
+      local:MvxBind="{'Text':{'Path':'Content'}}"
+    />
+</LinearLayout>

@@ -39,7 +39,13 @@ namespace CrossBox.Ui.Android
 		{
 			
 			// aapt resource value: 0x7f020000
-			public const int Icon = 2130837504;
+			public const int file_icon = 2130837504;
+			
+			// aapt resource value: 0x7f020001
+			public const int folder_icon = 2130837505;
+			
+			// aapt resource value: 0x7f020002
+			public const int Icon = 2130837506;
 			
 			private Drawable()
 			{
@@ -48,6 +54,9 @@ namespace CrossBox.Ui.Android
 		
 		public partial class Id
 		{
+			
+			// aapt resource value: 0x7f040002
+			public const int ItemText = 2130968578;
 			
 			// aapt resource value: 0x7f040001
 			public const int MvxBindableListItemTagUnique = 2130968577;
@@ -64,13 +73,16 @@ namespace CrossBox.Ui.Android
 		{
 			
 			// aapt resource value: 0x7f030000
-			public const int Main = 2130903040;
+			public const int DropBoxItem_ViewModel = 2130903040;
 			
 			// aapt resource value: 0x7f030001
-			public const int Page_MainMenuView = 2130903041;
+			public const int Page_FileContentView = 2130903041;
 			
 			// aapt resource value: 0x7f030002
-			public const int SplashScreen = 2130903042;
+			public const int Page_MainMenuView = 2130903042;
+			
+			// aapt resource value: 0x7f030003
+			public const int SplashScreen = 2130903043;
 			
 			private Layout()
 			{
