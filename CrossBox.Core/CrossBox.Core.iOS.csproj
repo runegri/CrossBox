@@ -63,5 +63,6 @@
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
     <Compile Include="CrossBoxApp.cs" />
     <Compile Include="StartApplication.cs" />
+    <Compile Include="DropBox\MonoTouchDropboxClient.cs" />
   </ItemGroup>
 </Project>
