@@ -103,6 +103,7 @@
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Views\MainMenuView.cs" />
     <Compile Include="Setup.cs" />
+    <Compile Include="Views\FileContentView.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
