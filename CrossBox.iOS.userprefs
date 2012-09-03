@@ -1,25 +1,24 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CrossBox.Core/DropBox/MonoTouchDropboxClient.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="CrossBox.UI.iOS/Views/MainMenuView.cs">
     <Files>
-      <File FileName="CrossBox.UI.iOS/AppDelegate.cs" Line="32" Column="22" />
-      <File FileName="CrossBox.UI.iOS/Views/MainMenuView.cs" Line="20" Column="6" />
-      <File FileName="CrossBox.Core/ViewModels/MainMenuViewModel.cs" Line="42" Column="27" />
+      <File FileName="CrossBox.UI.iOS/Views/MainMenuView.cs" Line="32" Column="14" />
+      <File FileName="CrossBox.Core/ViewModels/MainMenuViewModel.cs" Line="43" Column="10" />
       <File FileName="CrossBox.UI.iOS/Setup.cs" Line="7" Column="43" />
-      <File FileName="CrossBox.Core/DropBox/MonoTouchDropboxClient.cs" Line="11" Column="3" />
-      <File FileName="CrossBox.Core/DropBox/DropBoxClient.cs" Line="1" Column="1" />
+      <File FileName="CrossBox.Core/ViewModels/FileContentViewModel.cs" Line="2" Column="1" />
+      <File FileName="CrossBox.Core/ViewModels/DropboxObjectViewModel.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="CrossBox.Core.iOS" expanded="True">
-            <Node name="DropBox" expanded="True">
-              <Node name="MonoTouchDropboxClient.cs" selected="True" />
-            </Node>
+            <Node name="DropBox" expanded="True" />
             <Node name="ViewModels" expanded="True" />
           </Node>
           <Node name="CrossBox.UI.iOS" expanded="True">
-            <Node name="Views" expanded="True" />
+            <Node name="Views" expanded="True">
+              <Node name="MainMenuView.cs" selected="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
