@@ -54,8 +54,8 @@ namespace CrossBox.Core.DropBox
 					var uri = new NSUrl (Client.BuildAuthorizeUrl (userLogin));
 					var viewController = new CrossBoxBrowserViewController (Client, uri);
 
-					var parentVC = GetNavController (_window.Subviews [0]);
-					parentVC.PushViewController (viewController, true);	
+//					var parentVC = GetNavController (_window.Subviews [0]);
+					_window.GetNavigationController().PushViewController(viewController, true);	
 				}
 				);
 			},
@@ -63,29 +63,11 @@ namespace CrossBox.Core.DropBox
 
 		}
 
-		private static UINavigationController GetNavController (UIView view)
-		{
-			var nextResponer = view.NextResponder;
-			if (nextResponer is UINavigationController) {
-				return (UINavigationController)nextResponer;
-			}
-
-			if (nextResponer is UIViewController && ((UIViewController)nextResponer).NavigationController != null) {
-				return ((UIViewController)nextResponer).NavigationController;
-			}
-
-			if (nextResponer is UIView) {
-				return GetNavController ((UIView)nextResponer);
-			}
-
-			return null;
-		}
-
 		public override void AuthenticatedCallback ()
 		{
 			_window.InvokeOnMainThread (() => 
 			{
-				GetNavController (_window.Subviews [0]).PopViewControllerAnimated (true);
+				_window.GetNavigationController().PopViewControllerAnimated (true);
 				if (_onSuccess == null || _onError == null) 
 				{
 					CleanUpHandlers ();
@@ -163,6 +145,34 @@ namespace CrossBox.Core.DropBox
 				Dispose ();
 			}
 		}
+	}
+
+	public static class ViewHelper
+	{
+		
+		public static UINavigationController GetNavigationController (this UIView view)
+		{
+			var nextResponer = view.NextResponder;
+			if (nextResponer is UINavigationController) {
+				return (UINavigationController)nextResponer;
+			}
+
+			if (nextResponer is UIViewController && ((UIViewController)nextResponer).NavigationController != null) {
+				return ((UIViewController)nextResponer).NavigationController;
+			}
+
+			if (nextResponer is UIView) {
+				return GetNavigationController ((UIView)nextResponer);
+			}
+
+			if(nextResponer is UIApplication && view.Subviews.Length > 0) {
+				return GetNavigationController(view.Subviews[0]);
+			}
+
+			return null;
+		}
+
+
 	}
 }
 
