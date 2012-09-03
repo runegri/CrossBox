@@ -87,7 +87,6 @@ namespace CrossBox.Core.ViewModels
             if (selectedObject.IsDirectory)
             {
                 RequestNavigate<MainMenuViewModel>(new {folder = selectedObject.FullPath});
-                //SelectFolder(selectedObject.FullPath);
             }
             else
             {

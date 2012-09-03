@@ -21,6 +21,7 @@ namespace CrossBox.UI.iOS
 		public override bool FinishedLaunching (UIApplication application, NSDictionary launcOptions)
 		{
 			_window = new UIWindow(UIScreen.MainScreen.Bounds);
+	//		_window.RootViewController = new UINavigationController();
 
 			var presenter = new MvxTouchViewPresenter(this, _window);
 			var setup = new Setup(this, presenter, _window);
@@ -29,7 +30,6 @@ namespace CrossBox.UI.iOS
 			var start = this.GetService<IMvxStartNavigation>();
 			start.Start();
 
-			_window.RootViewController = new UINavigationController();
 			_window.MakeKeyAndVisible();
 
 			return true;

@@ -7,20 +7,17 @@ namespace CrossBox.Core.DropBox
 {
 	public class MonoTouchDropBoxClient : DropboxClient
 	{
-
-		private UIViewController _viewController;
 		private Action _onSuccess;
 		private Action<Exception> _onError;
 
-		public static DropboxClient CreateInstance(string apiKey, string appSecret, UIWindow window)
-        {
-            if (Instance != null)
-            {
-                throw new InvalidOperationException("Instance already created");
-            }
-            Instance = new MonoTouchDropBoxClient(apiKey, appSecret, window);
-            return Instance;
-        }
+		public static DropboxClient CreateInstance (string apiKey, string appSecret, UIWindow window)
+		{
+			if (Instance != null) {
+				throw new InvalidOperationException ("Instance already created");
+			}
+			Instance = new MonoTouchDropBoxClient (apiKey, appSecret, window);
+			return Instance;
+		}
 
 		private readonly UIWindow _window;
 
@@ -30,69 +27,90 @@ namespace CrossBox.Core.DropBox
 		}
 
 		public override string UserSecret {
-			get { return NSUserDefaults.StandardUserDefaults.StringForKey("UserSecret" + ApiKey); }
-			set { NSUserDefaults.StandardUserDefaults.SetString(value, "UserSecret" + ApiKey); }
+			get { return NSUserDefaults.StandardUserDefaults.StringForKey ("UserSecret" + ApiKey); }
+			set { NSUserDefaults.StandardUserDefaults.SetString (value, "UserSecret" + ApiKey); }
 		}
 
 		public override string UserToken {
-			get { return NSUserDefaults.StandardUserDefaults.StringForKey("UserToken" + ApiKey); }
-			set { NSUserDefaults.StandardUserDefaults.SetString(value, "UserToken" + ApiKey); }
+			get { return NSUserDefaults.StandardUserDefaults.StringForKey ("UserToken" + ApiKey); }
+			set { NSUserDefaults.StandardUserDefaults.SetString (value, "UserToken" + ApiKey); }
 		}
 
 		public override void EnsureIsAuthenticated (Action onSuccess, Action<Exception> onError)
 		{
-			if(IsAuthenticated)
-			{
-				onSuccess();
+			if (IsAuthenticated) {
+				onSuccess ();
 				return;
 			}
 
 			_onSuccess = onSuccess;
 			_onError = onError;
 
-			_viewController = _window.RootViewController;
-
-			Client.GetTokenAsync(
+			Client.GetTokenAsync (
 				userLogin => 
-				{	
-					_window.InvokeOnMainThread(() => 
-					{
-						var uri = new NSUrl(Client.BuildAuthorizeUrl(userLogin));
-						var viewController = new CrossBoxBrowserViewController(Client, uri);
-						_window.RootViewController = viewController;
-					});
-				},
-				tokenException => onError(tokenException));
+			{	
+				_window.InvokeOnMainThread (() => 
+				{
+					var uri = new NSUrl (Client.BuildAuthorizeUrl (userLogin));
+					var viewController = new CrossBoxBrowserViewController (Client, uri);
 
+					var parentVC = GetNavController (_window.Subviews [0]);
+					parentVC.PushViewController (viewController, true);	
+				}
+				);
+			},
+				tokenException => onError (tokenException));
+
+		}
+
+		private static UINavigationController GetNavController (UIView view)
+		{
+			var nextResponer = view.NextResponder;
+			if (nextResponer is UINavigationController) {
+				return (UINavigationController)nextResponer;
+			}
+
+			if (nextResponer is UIViewController && ((UIViewController)nextResponer).NavigationController != null) {
+				return ((UIViewController)nextResponer).NavigationController;
+			}
+
+			if (nextResponer is UIView) {
+				return GetNavController ((UIView)nextResponer);
+			}
+
+			return null;
 		}
 
 		public override void AuthenticatedCallback ()
 		{
-			_window.RootViewController = _viewController;
-
-			if(_onSuccess == null || _onError == null)
+			_window.InvokeOnMainThread (() => 
 			{
-				CleanUpHandlers();
-				throw new InvalidOperationException("Activity result without callbacks");
-			}
+				GetNavController (_window.Subviews [0]).PopViewControllerAnimated (true);
+				if (_onSuccess == null || _onError == null) 
+				{
+					CleanUpHandlers ();
+					throw new InvalidOperationException ("Activity result without callbacks");
+				}
 
-			Client.GetAccessTokenAsync(
+				Client.GetAccessTokenAsync (
 				userToken => 
 				{
 					UserToken = userToken.Token;
 					UserSecret = userToken.Secret;
-					_onSuccess();
-					CleanUpHandlers();
+					_onSuccess ();
+					CleanUpHandlers ();
 				},
 				tokenExcpetion => 
 				{
-					_onError(tokenExcpetion);
-					CleanUpHandlers();
-				});
-
+					_onError (tokenExcpetion);
+					CleanUpHandlers ();
+				}
+				);
+			}
+			);
 		}
 
-		private void CleanUpHandlers()
+		private void CleanUpHandlers ()
 		{
 			_onSuccess = null;
 			_onError = null;
@@ -100,11 +118,16 @@ namespace CrossBox.Core.DropBox
 
 	}
 
-	public partial class CrossBoxBrowserViewController : UIViewController
+	public class CrossBoxBrowserViewController : UIViewController
 	{
 
 		private readonly DropNetClient _dropboxClient;
 		private readonly NSUrl _url;
+		private UIWebView _webView;
+
+		// This constructor will be called by the mono runtime. It creates an instance that is not 
+		// to be used...
+		public CrossBoxBrowserViewController(IntPtr ptr) {}
 
 		public CrossBoxBrowserViewController (DropNetClient dropboxClient, NSUrl url)
 		{
@@ -116,30 +139,28 @@ namespace CrossBox.Core.DropBox
 		{
 			base.ViewDidLoad ();
 
-			InvokeOnMainThread(() => 
-            {
-				var webView = new UIWebView();
-				webView.Frame = new System.Drawing.RectangleF(0,0, 320, 480);
-				webView.LoadFinished += OnLoadFinished;
-				this.Add(webView);
+			InvokeOnMainThread (() => 
+			{
+				_webView = new UIWebView ();
+				_webView.Frame = new System.Drawing.RectangleF (0, 0, 320, 480);
+				_webView.LoadFinished += OnLoadFinished;
+				this.Add (_webView);
 
-				webView.LoadRequest(new NSUrlRequest(_url));
+				_webView.LoadRequest (new NSUrlRequest (_url));
 
-				Title = "Authenticate with Dropbox";
-			});
+				Title = "Dropbox Authentication";
+			}
+			);
 
 		}
 
 		void OnLoadFinished (object sender, EventArgs e)
 		{
+			var url = _webView.Request.Url.AbsoluteString;
 
-			var webView = (UIWebView)sender;
-			var url = webView.Request.Url.AbsoluteString;
-
-			if(url.EndsWith("/1/oauth/authorize"))
-			{
-				DropboxClient.Instance.AuthenticatedCallback();
-				Dispose();
+			if (url.EndsWith ("/1/oauth/authorize")) {
+				DropboxClient.Instance.AuthenticatedCallback ();
+				Dispose ();
 			}
 		}
 	}

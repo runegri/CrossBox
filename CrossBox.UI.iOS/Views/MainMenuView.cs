@@ -26,6 +26,7 @@ namespace CrossBox.UI.iOS
 			Title = "CrossBox";
 
 			var tableSource = new TableViewSource(TableView);
+			tableSource.SelectionChanged += (sender, e) => ViewModel.SelectItemCommand.Execute(e.AddedItems[0]);
 
 			this.AddBindings(new Dictionary<object, string>
 			                 {
@@ -34,8 +35,6 @@ namespace CrossBox.UI.iOS
 
 			TableView.Source = tableSource;
 			TableView.ReloadData();
-
-			//Bind("Title", this, "FolderName", null);
 		}
 
 
@@ -47,7 +46,7 @@ namespace CrossBox.UI.iOS
 			public TableViewSource(UITableView tableView) : base(tableView)
 			{}
 
-			protected override UITableViewCell GetOrCreateCellFor (UITableView tableView, MonoTouch.Foundation.NSIndexPath indexPath, object item)
+			protected override UITableViewCell GetOrCreateCellFor (UITableView tableView, NSIndexPath indexPath, object item)
 			{
 				var reuseCell = tableView.DequeueReusableCell(CellId);
 				if(reuseCell != null)
@@ -63,7 +62,7 @@ namespace CrossBox.UI.iOS
 
 		public class TableViewCell : MvxBindableTableViewCell
 		{
-			const string Binding = @"{'TitleText':{'Path':'Name'}}";
+			const string Binding = @"{'TitleText':{'Path':'Name'}, 'DetailText':{'Path':'FullPath'}}";
 
 			public TableViewCell(UITableViewCellStyle style, NSString cellId) : 
 				base(Binding, style, cellId)

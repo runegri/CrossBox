@@ -13,7 +13,7 @@ namespace CrossBox.UI.iOS
 	public class Setup : MvxTouchDialogBindingSetup, IMvxServiceProducer<IDropBoxClient>
 	{
 
-		UIWindow _window;
+		private readonly UIWindow _window;
 
 		public Setup(MvxApplicationDelegate appDelegate, IMvxTouchViewPresenter presenter, UIWindow window) 
 			: base(appDelegate, presenter)
@@ -21,10 +21,15 @@ namespace CrossBox.UI.iOS
 			_window = window;
 		}
 
-		protected override Cirrious.MvvmCross.Application.MvxApplication CreateApp ()
+		protected override void InitializeIoC ()
 		{
+			base.InitializeIoC ();
 			this.RegisterServiceInstance<IDropBoxClient>(
 				MonoTouchDropBoxClient.CreateInstance(CrossBoxApp.AppKey, CrossBoxApp.AppSecret, _window));
+		}
+
+		protected override Cirrious.MvvmCross.Application.MvxApplication CreateApp ()
+		{
 			return new CrossBoxApp();
 		}
 	}

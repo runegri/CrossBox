@@ -2,11 +2,12 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.Workbench ActiveDocument="CrossBox.UI.iOS/Views/MainMenuView.cs">
     <Files>
-      <File FileName="CrossBox.UI.iOS/Views/MainMenuView.cs" Line="32" Column="14" />
-      <File FileName="CrossBox.Core/ViewModels/MainMenuViewModel.cs" Line="43" Column="10" />
+      <File FileName="CrossBox.UI.iOS/Views/MainMenuView.cs" Line="40" Column="4" />
+      <File FileName="CrossBox.Core/ViewModels/MainMenuViewModel.cs" Line="27" Column="54" />
       <File FileName="CrossBox.UI.iOS/Setup.cs" Line="7" Column="43" />
-      <File FileName="CrossBox.Core/ViewModels/FileContentViewModel.cs" Line="2" Column="1" />
+      <File FileName="CrossBox.Core/ViewModels/FileContentViewModel.cs" Line="10" Column="1" />
       <File FileName="CrossBox.Core/ViewModels/DropboxObjectViewModel.cs" Line="1" Column="1" />
+      <File FileName="CrossBox.UI.iOS/Main.cs" Line="21" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -33,7 +34,9 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/runegri/Projects/CrossBox/CrossBox.Core/ViewModels/MainMenuViewModel.cs" line="87" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
