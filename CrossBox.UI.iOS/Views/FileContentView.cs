@@ -14,6 +14,7 @@ namespace CrossBox.UI.iOS
 
 
 		UITextView _textView;
+		UIActivityIndicatorView _activityIndicator;
 
 		public FileContentView (MvxShowViewModelRequest request) :
 			base(request)
@@ -30,9 +31,18 @@ namespace CrossBox.UI.iOS
 			_textView.Frame = new RectangleF(0,0,320,480);
 			Add (_textView);
 
+			_activityIndicator = new UIActivityIndicatorView (View.Frame)
+			{
+				ActivityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+			};
+			Add (_activityIndicator);
+			View.BringSubviewToFront (_activityIndicator);
+
+
 			this.AddBindings (new Dictionary<object, string>
 			    {
-					{_textView, "{'Text':{'Path':'Content'}}"}
+					{_textView, "{'Text':{'Path':'Content'}}"},
+					{ _activityIndicator, "{'Hidden':{'Path':'IsLoading', 'Converter':'InverseVisibility'}}" }
 				});
 
 		}

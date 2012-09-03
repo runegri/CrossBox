@@ -8,6 +8,7 @@ using MonoTouch.UIKit;
 using Cirrious.MvvmCross.Binding.Touch.ExtensionMethods;
 using System.Collections.Generic;
 using MonoTouch.Foundation;
+using System.Drawing;
 
 namespace CrossBox.UI.iOS
 {
@@ -15,9 +16,12 @@ namespace CrossBox.UI.iOS
 		MvxBindingTouchTableViewController<MainMenuViewModel>, 
 		IMvxServiceConsumer<IMvxBinder>
 	{
-		public MainMenuView (MvxShowViewModelRequest request) : base(request)
+		public MainMenuView (MvxShowViewModelRequest request) :
+			base(request)
 		{
 		}
+
+		private UIActivityIndicatorView _activityIndicator;
 
 		public override void ViewDidLoad ()
 		{
@@ -25,36 +29,44 @@ namespace CrossBox.UI.iOS
 
 			Title = "CrossBox";
 
-			var tableSource = new TableViewSource(TableView);
-			tableSource.SelectionChanged += (sender, e) => ViewModel.SelectItemCommand.Execute(e.AddedItems[0]);
+			var tableSource = new TableViewSource (TableView);
+			tableSource.SelectionChanged += (sender, e) => ViewModel.SelectItemCommand.Execute (e.AddedItems [0]);
 
-			this.AddBindings(new Dictionary<object, string>
+			_activityIndicator = new UIActivityIndicatorView (View.Frame)
+			{
+				ActivityIndicatorViewStyle = UIActivityIndicatorViewStyle.Gray
+			};
+			Add (_activityIndicator);
+			View.BringSubviewToFront (_activityIndicator);
+
+			this.AddBindings (new Dictionary<object, string>
 			                 {
-								{ tableSource, "{'ItemsSource':{'Path':'FolderContents'}}"}
-							 });
+								{ tableSource, "{'ItemsSource':{'Path':'FolderContents'}}"},
+								{ _activityIndicator, "{'Hidden':{'Path':'IsLoading', 'Converter':'InverseVisibility'}}" }
+							 }
+			);
 
 			TableView.Source = tableSource;
-			TableView.ReloadData();
+			TableView.ReloadData ();
 		}
 
 
-		public class TableViewSource : MvxBindableTableViewSource 
+		public class TableViewSource : MvxBindableTableViewSource
 		{
-			readonly static NSString CellId = new NSString("DropBoxItemTableCell");
+			readonly static NSString CellId = new NSString ("DropBoxItemTableCell");
 
-
-			public TableViewSource(UITableView tableView) : base(tableView)
-			{}
+			public TableViewSource (UITableView tableView) : base(tableView)
+			{
+			}
 
 			protected override UITableViewCell GetOrCreateCellFor (UITableView tableView, NSIndexPath indexPath, object item)
 			{
-				var reuseCell = tableView.DequeueReusableCell(CellId);
-				if(reuseCell != null)
-				{
+				var reuseCell = tableView.DequeueReusableCell (CellId);
+				if (reuseCell != null) {
 					return reuseCell;
 				}
 
-				var newCell = new TableViewCell(UITableViewCellStyle.Subtitle, CellId);
+				var newCell = new TableViewCell (UITableViewCellStyle.Subtitle, CellId);
 				return newCell;
 			}
 
@@ -64,7 +76,7 @@ namespace CrossBox.UI.iOS
 		{
 			const string Binding = @"{'TitleText':{'Path':'Name'}, 'DetailText':{'Path':'FullPath'}}";
 
-			public TableViewCell(UITableViewCellStyle style, NSString cellId) : 
+			public TableViewCell (UITableViewCellStyle style, NSString cellId) : 
 				base(Binding, style, cellId)
 			{
 				Accessory = UITableViewCellAccessory.DisclosureIndicator;
