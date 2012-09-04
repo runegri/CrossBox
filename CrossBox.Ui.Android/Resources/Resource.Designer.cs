@@ -55,6 +55,9 @@ namespace CrossBox.Ui.Android
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f040003
+			public const int ContentView = 2130968579;
+			
 			// aapt resource value: 0x7f040002
 			public const int ItemText = 2130968578;
 			

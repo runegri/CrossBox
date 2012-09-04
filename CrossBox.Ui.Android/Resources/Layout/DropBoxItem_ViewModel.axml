@@ -18,8 +18,7 @@
     <TextView
         p1:text="Text"
         p1:layout_column="1"
-        p1:id="@+id/ItemText"
-        
+        p1:id="@+id/ItemText"        
         p1:layout_gravity="center_vertical"
         style="@android:style/TextAppearance.Large"
         local:MvxBind="{'Text':{'Path':'FullPath'}}" />
