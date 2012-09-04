@@ -48,6 +48,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Cirrious.MvvmCross.WindowsPhone, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="DropNet.WindowsPhone, Version=1.8.2.0, Culture=neutral, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone" />
     <Reference Include="Microsoft.Phone.Controls, Version=7.0.0.0, Culture=neutral, PublicKeyToken=24eec0d8c86cda1e, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.Phone.Interop" />
@@ -110,10 +112,6 @@
     <Content Include="SplashScreenImage.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\MvvmCross\Cirrious\Cirrious.MvvmCross\Cirrious.MvvmCross.WindowsPhone.csproj">
-      <Project>{A9F1C41F-FBC3-4DE3-8572-68990C1BCFC3}</Project>
-      <Name>Cirrious.MvvmCross.WindowsPhone</Name>
-    </ProjectReference>
     <ProjectReference Include="..\CrossBox.Core\CrossBox.Core.WP7.csproj">
       <Project>{925A0EF3-80C3-4452-A3DD-B383078A8824}</Project>
       <Name>CrossBox.Core.WP7</Name>
