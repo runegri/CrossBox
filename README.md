@@ -13,3 +13,7 @@ TODO for the future:
 * Modify files
 * Upload new files
 * Save files to local storage
+
+
+Oh. While I remember. This project uses components from two other projects: MVVMCross (https://github.com/slodge/MvvmCross/) by @slodge (https://twitter.com/slodge) and DropNet (https://github.com/dkarzon/DropNet) by @dkarzon (https://twitter.com/dkarzon). 
+Thanks guys!
