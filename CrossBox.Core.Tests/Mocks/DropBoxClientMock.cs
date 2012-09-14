@@ -43,6 +43,11 @@ namespace CrossBox.Core.Tests.Mocks
             GetFileContentWasRun = true;
             onSuccess(new DropBoxFile(path, Path.GetFileName(path)));
         }
+
+        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DropBoxClientMock_FailsOnGetFolderContent : IDropBoxClient
@@ -66,6 +71,11 @@ namespace CrossBox.Core.Tests.Mocks
         public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
         }
+
+        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public class DropBoxClientMock_FailsOnEnsureIsAuthenticated : IDropBoxClient
@@ -88,6 +98,11 @@ namespace CrossBox.Core.Tests.Mocks
 
         public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
+        }
+
+        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -124,6 +139,11 @@ namespace CrossBox.Core.Tests.Mocks
             {
                 onSuccess(GetFileWithContent());
             }
+        }
+
+        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
+            throw new NotImplementedException();
         }
     }
 }

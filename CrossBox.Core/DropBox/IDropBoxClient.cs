@@ -8,5 +8,6 @@ namespace CrossBox.Core.DropBox
         void EnsureIsAuthenticated(Action onSuccess, Action<Exception> onError);
         void GetFolderContent(string folder, Action<IEnumerable<DropBoxItem>> onSuccess, Action<Exception> onError);
         void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError);
+        void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError);
     }
 }

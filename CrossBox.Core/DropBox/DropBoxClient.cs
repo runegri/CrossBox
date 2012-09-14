@@ -89,6 +89,19 @@ namespace CrossBox.Core.DropBox
                                 dropBoxException => onError(dropBoxException));
         }
 
+        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
+            var fileName = Path.GetFileName(path);
+            Client.UploadFileAsync(path, fileName, content,
+                metaData =>
+                {
+                    var dropBoxFile = new DropBoxFile(fileName, path, content);
+                    onSuccess(dropBoxFile);
+                },
+                dropBoxException => onError(dropBoxException)
+                );
+        }
+
         public virtual void AuthenticatedCallback() { }
     }
 }
