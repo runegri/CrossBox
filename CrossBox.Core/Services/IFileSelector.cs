@@ -7,7 +7,7 @@ namespace CrossBox.Core.Services
 {
     public interface IFileSelector
     {
-        SelectedFile SelectFile();
+        void SelectFile(Action<SelectedFile> onFileSelected);
     }
 
     public class SelectedFile

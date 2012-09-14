@@ -15,9 +15,9 @@ namespace CrossBox.Core.Tests.Mocks
             _selectedFile = selectedFile;
         }
 
-        public SelectedFile SelectFile()
+        public void SelectFile(Action<SelectedFile> onFileSelected)
         {
-            return _selectedFile;
+            onFileSelected(_selectedFile);
         }
     }
 }

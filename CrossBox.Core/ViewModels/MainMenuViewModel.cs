@@ -95,15 +95,17 @@ namespace CrossBox.Core.ViewModels
             }
         }
 
-        public IMvxCommand UploadFileCommand
+        public MvxRelayCommand UploadFileCommand
         {
             get { return new MvxRelayCommand(UploadFile); }
         }
 
         private void UploadFile()
         {
-            var file = this.GetService<IFileSelector>().SelectFile();
-            this.GetService<IDropBoxClient>().UploadFile(FolderName, file.FileName, file.FileData, FileUploaded, ReportError);
+            var fileSelector = this.GetService<IFileSelector>();
+            fileSelector.SelectFile(
+                file => this.GetService<IDropBoxClient>().UploadFile(
+                    FolderName, file.FileName, file.FileData, FileUploaded, ReportError));
         }
 
         private void FileUploaded(DropBoxFile file)

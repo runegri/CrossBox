@@ -246,18 +246,15 @@ namespace CrossBox.Core.Tests.ViewModels
         public void Assure_UploadFileCommand_Causes_File_Selector_To_Uploaded()
         {
             var fileBytes = Encoding.UTF8.GetBytes("hello world!");
-            const string fileName = "file name";
-            var file = new SelectedFile(fileName, fileBytes);
+            var file = new SelectedFile("file name", fileBytes);
 
             SetUp_To_Upload_Selected_File(file);
-
-
+            
             var viewModel = new MainMenuViewModel();
             viewModel.UploadFileCommand.Execute();
 
             var mock = (DropBoxClientMock_StoresUploadedFile) _client;
             Assert.That(mock.UploadedFile.Name, Is.EqualTo(file.FileName));
-
         }
     }
 }

@@ -41,9 +41,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Cirrious.MvvmCross.WindowsPhone">
-      <HintPath>..\lib\wp7\Cirrious.MvvmCross.WindowsPhone.dll</HintPath>
-    </Reference>
     <Reference Include="DropNet.WindowsPhone">
       <HintPath>..\lib\wp7\DropNet.WindowsPhone.dll</HintPath>
     </Reference>
@@ -70,11 +67,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IErrorReporter.cs" />
     <Compile Include="Services\IFileSelector.cs" />
+    <Compile Include="Services\Wp7FileSelector.cs" />
     <Compile Include="StartApplication.cs" />
     <Compile Include="ViewModels\CrossBoxViewModel.cs" />
     <Compile Include="ViewModels\DropboxObjectViewModel.cs" />
     <Compile Include="ViewModels\FileContentViewModel.cs" />
     <Compile Include="ViewModels\MainMenuViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\MvvmCross\Cirrious\Cirrious.MvvmCross\Cirrious.MvvmCross.WindowsPhone.csproj">
+      <Project>{A9F1C41F-FBC3-4DE3-8572-68990C1BCFC3}</Project>
+      <Name>Cirrious.MvvmCross.WindowsPhone</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.$(TargetFrameworkProfile).Overrides.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Silverlight for Phone\$(TargetFrameworkVersion)\Microsoft.Silverlight.CSharp.targets" />

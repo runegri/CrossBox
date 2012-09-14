@@ -22,6 +22,11 @@ namespace CrossBox.UI.WP7.Views
             InitializeComponent();
         }
 
+        private void ApplicationBarIconButton_Click(object sender, EventArgs e)
+        {
+            ViewModel.UploadFileCommand.Execute();
+        }
+
     }
 
     public class BaseMainMenuView : MvxPhonePage<MainMenuViewModel>
