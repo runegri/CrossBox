@@ -44,7 +44,7 @@ namespace CrossBox.Core.Tests.Mocks
             onSuccess(new DropBoxFile(path, Path.GetFileName(path)));
         }
 
-        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        public void UploadFile(string path, string fileName, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
             throw new NotImplementedException();
         }
@@ -72,7 +72,7 @@ namespace CrossBox.Core.Tests.Mocks
         {
         }
 
-        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        public void UploadFile(string path, string fileName, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
             throw new NotImplementedException();
         }
@@ -100,7 +100,7 @@ namespace CrossBox.Core.Tests.Mocks
         {
         }
 
-        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        public void UploadFile(string path, string fileName, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
             throw new NotImplementedException();
         }
@@ -141,7 +141,7 @@ namespace CrossBox.Core.Tests.Mocks
             }
         }
 
-        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        public void UploadFile(string path, string fileName, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
             throw new NotImplementedException();
         }

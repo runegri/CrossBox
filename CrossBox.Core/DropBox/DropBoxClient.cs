@@ -89,9 +89,8 @@ namespace CrossBox.Core.DropBox
                                 dropBoxException => onError(dropBoxException));
         }
 
-        public void UploadFile(string path, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        public void UploadFile(string path, string fileName, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
         {
-            var fileName = Path.GetFileName(path);
             Client.UploadFileAsync(path, fileName, content,
                 metaData =>
                 {

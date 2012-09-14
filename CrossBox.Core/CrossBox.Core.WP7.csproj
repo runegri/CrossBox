@@ -69,6 +69,7 @@
     <Compile Include="DropBox\Wp7DropBoxClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IErrorReporter.cs" />
+    <Compile Include="Services\IFileSelector.cs" />
     <Compile Include="StartApplication.cs" />
     <Compile Include="ViewModels\CrossBoxViewModel.cs" />
     <Compile Include="ViewModels\DropboxObjectViewModel.cs" />

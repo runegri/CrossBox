@@ -7,10 +7,11 @@ using Cirrious.MvvmCross.ExtensionMethods;
 using Cirrious.MvvmCross.Interfaces.Commands;
 using Cirrious.MvvmCross.Interfaces.ServiceProvider;
 using CrossBox.Core.DropBox;
+using CrossBox.Core.Services;
 
 namespace CrossBox.Core.ViewModels
 {
-    public class MainMenuViewModel : CrossBoxViewModel, IMvxServiceConsumer<IDropBoxClient>
+    public class MainMenuViewModel : CrossBoxViewModel, IMvxServiceConsumer<IDropBoxClient>, IMvxServiceConsumer<IFileSelector>
     {        
         public MainMenuViewModel(string folder = "/")
         {
@@ -92,6 +93,22 @@ namespace CrossBox.Core.ViewModels
             {
                 RequestNavigate<FileContentViewModel>(new { fileName = selectedObject.FullPath });
             }
+        }
+
+        public IMvxCommand UploadFileCommand
+        {
+            get { return new MvxRelayCommand(UploadFile); }
+        }
+
+        private void UploadFile()
+        {
+            var file = this.GetService<IFileSelector>().SelectFile();
+            this.GetService<IDropBoxClient>().UploadFile(FolderName, file.FileName, file.FileData, FileUploaded, ReportError);
+        }
+
+        private void FileUploaded(DropBoxFile file)
+        {
+            SelectFolder(FolderName);
         }
     }
 }
