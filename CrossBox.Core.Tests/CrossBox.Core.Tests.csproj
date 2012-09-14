@@ -51,6 +51,7 @@
     <Compile Include="DropBox\DropBoxItem_Tests.cs" />
     <Compile Include="Mocks\DropBoxClientMock.cs" />
     <Compile Include="Mocks\ErrorReporterMock.cs" />
+    <Compile Include="Mocks\FileSelectorMock.cs" />
     <Compile Include="Mocks\MockSetup.cs" />
     <Compile Include="Mocks\ViewDispatcherMock.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

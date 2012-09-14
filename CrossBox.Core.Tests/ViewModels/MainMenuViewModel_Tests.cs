@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Linq;
+using System.Text;
 using CrossBox.Core.DropBox;
+using CrossBox.Core.Services;
 using CrossBox.Core.Tests.Mocks;
 using CrossBox.Core.ViewModels;
 using NUnit.Framework;
@@ -26,7 +28,7 @@ namespace CrossBox.Core.Tests.ViewModels
 
         private MockSetup _setup;
         private IDropBoxClient _client;
-
+        private IFileSelector _fileSelector = new FileSelectorMock(null);
 
         public void SetUp_To_Return_FolderContent()
         {
@@ -43,7 +45,15 @@ namespace CrossBox.Core.Tests.ViewModels
                     }
                     return new DropBoxItem[0];
                 });
-            _setup = new MockSetup(_client);
+            _setup = new MockSetup(_client, _fileSelector);
+            _setup.Initialize();
+        }
+
+        public void SetUp_To_Upload_Selected_File(SelectedFile selectedFile)
+        {
+            _fileSelector = new FileSelectorMock(selectedFile);
+            _client = new DropBoxClientMock_StoresUploadedFile();
+            _setup = new MockSetup(_client, _fileSelector);
             _setup.Initialize();
         }
 
@@ -104,7 +114,7 @@ namespace CrossBox.Core.Tests.ViewModels
         private void Setup_With_GetFolderContent_Error(Action<Exception> onError)
         {
             _client = new DropBoxClientMock_FailsOnGetFolderContent("Error");
-            _setup = new MockSetup(_client, onError);
+            _setup = new MockSetup(_client, _fileSelector, onError);
             _setup.Initialize();
         }
 
@@ -122,7 +132,7 @@ namespace CrossBox.Core.Tests.ViewModels
         private void Setup_With_EnsureIsAuthenticated_Error(Action<Exception> onError)
         {
             _client = new DropBoxClientMock_FailsOnEnsureIsAuthenticated("Error");
-            _setup = new MockSetup(_client, onError);
+            _setup = new MockSetup(_client, _fileSelector, onError);
             _setup.Initialize();
         }
 
@@ -232,5 +242,22 @@ namespace CrossBox.Core.Tests.ViewModels
             Assert.That(viewModel.FolderName, Is.EqualTo(folderName));
         }
 
+        [Test]
+        public void Assure_UploadFileCommand_Causes_File_Selector_To_Uploaded()
+        {
+            var fileBytes = Encoding.UTF8.GetBytes("hello world!");
+            const string fileName = "file name";
+            var file = new SelectedFile(fileName, fileBytes);
+
+            SetUp_To_Upload_Selected_File(file);
+
+
+            var viewModel = new MainMenuViewModel();
+            viewModel.UploadFileCommand.Execute();
+
+            var mock = (DropBoxClientMock_StoresUploadedFile) _client;
+            Assert.That(mock.UploadedFile.Name, Is.EqualTo(file.FileName));
+
+        }
     }
 }

@@ -146,4 +146,30 @@ namespace CrossBox.Core.Tests.Mocks
             throw new NotImplementedException();
         }
     }
+
+    public class DropBoxClientMock_StoresUploadedFile : IDropBoxClient
+    {
+        public DropBoxFile UploadedFile { get; private set; }
+
+        public void EnsureIsAuthenticated(Action onSuccess, Action<Exception> onError)
+        {
+            onSuccess();
+        }
+
+        public void GetFolderContent(string folder, Action<IEnumerable<DropBoxItem>> onSuccess, Action<Exception> onError)
+        {
+            onSuccess(new DropBoxItem[0]);
+        }
+
+        public void GetFileContent(string path, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
+            
+        }
+
+        public void UploadFile(string path, string fileName, byte[] content, Action<DropBoxFile> onSuccess, Action<Exception> onError)
+        {
+            UploadedFile = new DropBoxFile(path, fileName, content);
+            onSuccess(UploadedFile);
+        }
+    }
 }

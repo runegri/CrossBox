@@ -12,18 +12,20 @@ namespace CrossBox.Core.Tests.Mocks
     public class MockSetup : MvxBaseConsoleSetup
     {
         private readonly IDropBoxClient _dropBoxClient;
+        private readonly IFileSelector _fileSelector;
         private readonly Action<Exception> _reportErrorAction;
         private readonly ViewDispatcherMock _dispatcher = new ViewDispatcherMock();
 
-        public MockSetup(IDropBoxClient dropBoxClient, Action<Exception> reportErrorAction = null)
+        public MockSetup(IDropBoxClient dropBoxClient, IFileSelector fileSelector, Action<Exception> reportErrorAction = null)
         {
             _dropBoxClient = dropBoxClient;
+            _fileSelector = fileSelector;
             _reportErrorAction = reportErrorAction;
         }
 
         protected override MvxApplication CreateApp()
         {
-            return new MockApplication(new ErrorReporterMock(_reportErrorAction), _dropBoxClient);
+            return new MockApplication(new ErrorReporterMock(_reportErrorAction), _dropBoxClient, _fileSelector);
         }
 
         protected override IMvxViewDispatcherProvider CreateViewDispatcherProvider()
@@ -37,13 +39,15 @@ namespace CrossBox.Core.Tests.Mocks
     public class MockApplication : 
         MvxApplication, 
         IMvxServiceProducer<IErrorReporter>, 
-        IMvxServiceProducer<IDropBoxClient>
+        IMvxServiceProducer<IDropBoxClient>,
+        IMvxServiceProducer<IFileSelector>
     {
 
-        public MockApplication(IErrorReporter errorReporter, IDropBoxClient dropBoxClient)
+        public MockApplication(IErrorReporter errorReporter, IDropBoxClient dropBoxClient, IFileSelector fileSelector)
         {
             this.RegisterServiceInstance(errorReporter);
             this.RegisterServiceInstance(dropBoxClient);
+            this.RegisterServiceInstance(fileSelector);
         }
     }
 }

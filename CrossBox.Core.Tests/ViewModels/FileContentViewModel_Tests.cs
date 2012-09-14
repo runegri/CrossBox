@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using CrossBox.Core.DropBox;
+using CrossBox.Core.Services;
 using CrossBox.Core.Tests.Mocks;
 using CrossBox.Core.ViewModels;
 using NUnit.Framework;
@@ -15,12 +16,13 @@ namespace CrossBox.Core.Tests.ViewModels
 
         private MockSetup _setup;
         private IDropBoxClient _client;
+        private IFileSelector _fileSelector = new FileSelectorMock(null);
 
         [SetUp]
         public void SetUp()
         {
             _client = new DropBoxClientMock_ReturnsFileContent();
-            _setup = new MockSetup(_client);
+            _setup = new MockSetup(_client, _fileSelector);
             _setup.Initialize();
             _viewModel = new FileContentViewModel("file.txt");
         }
